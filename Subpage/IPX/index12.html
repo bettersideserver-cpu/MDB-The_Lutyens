@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MDB The Lutyens</title>
     <link rel="stylesheet" href="wbn05d6fbh.css">
     <link rel="stylesheet" href="JS/TowerpinCSS.css">
@@ -78,7 +79,7 @@
         }
 
         @media (max-width: 600px) {
-            .Front { top: 50%; left: 50%; transform: translate(-50%, -50%) scale(1.8); }
+            /* .Front override moved to mobile overhaul block below */
             .info-card, .info-content { transform: scale(0.7); top: -50px; left: -30px; }
         }
 
@@ -679,7 +680,7 @@
 
         @media (max-width: 600px) {
             .rera-blueprint { left: 10px; transform: scale(.7); }
-            .Front { position: fixed; top: 55%; left: 50%; }
+            /* .Front override moved to mobile overhaul block */
         }
 
         .enquiry-btn {
@@ -1307,6 +1308,21 @@
             top: auto !important;
             left: auto !important;
         }
+        /* Mobile: lift above jumpbar */
+        @media (max-width: 768px) {
+            #enquiryBtn,
+            .enquiry-btn {
+                right: 10px !important;
+                bottom: 72px !important;
+            }
+        }
+        @media (max-width: 900px) and (orientation: landscape) {
+            #enquiryBtn,
+            .enquiry-btn {
+                bottom: 60px !important;
+                right: 10px !important;
+            }
+        }
     </style>
     <style>
         /* ═══════════════════════════════════════════════
@@ -1493,6 +1509,349 @@
             100% { opacity: 0; transform: scale(1.08); }
         }
     </style>
+
+    <!-- ═══════════════════════════════════════════════
+         MOBILE RESPONSIVE OVERHAUL
+         ═══════════════════════════════════════════════ -->
+    <style>
+        /* ── Base: ensure full viewport coverage ── */
+        html, body {
+            width: 100%;
+            overflow-x: hidden;
+        }
+
+        /* ── .Front — main building image container ── */
+        .Front {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #mainImage {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* ── Mobile-specific layout adjustments ── */
+        @media (max-width: 768px) {
+
+            /* Full-screen building image — fill height on portrait */
+            .Front {
+                top: 0;
+                left: 0;
+                transform: none;
+                width: 100vw;
+                height: 100dvh;
+                align-items: flex-start;
+                justify-content: center;
+            }
+
+            .image-wrapper {
+                width: 100vw;
+                height: 100dvh;
+                align-items: center;
+                overflow: hidden;
+            }
+
+            #mainImage {
+                width: 100vw;
+                height: 100dvh;
+                object-fit: cover;
+                object-position: center top;
+            }
+
+            /* SVG cutout matches the image */
+            .Cutout {
+                position: absolute;
+                inset: 0;
+                width: 100% !important;
+                height: 100% !important;
+            }
+
+            .Cutout svg {
+                width: 100%;
+                height: 100%;
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+
+            /* ── RERA badge — smaller + reposition ── */
+            .rera-blueprint {
+                top: 14px;
+                left: 12px;
+                transform: none;
+                padding-left: 10px;
+                border-left-width: 1.5px;
+            }
+            .bp-label { font-size: 8px; }
+            .bp-id { font-size: 11px; }
+
+            /* ── Top controls — compact icon row ── */
+            .top-controls {
+                top: 10px;
+                right: 10px;
+                gap: 6px;
+            }
+
+            .control-btn {
+                width: 36px;
+                height: 36px;
+                padding: 0;
+                justify-content: center;
+            }
+            .control-btn span { display: none; }
+            .control-btn svg { width: 15px; height: 15px; }
+
+            .menu-btn { width: 36px; height: 36px; }
+
+            /* Dropdown full-width on mobile */
+            .dropdown-menu {
+                top: 56px;
+                right: 10px;
+                width: calc(100vw - 20px);
+                max-width: 320px;
+            }
+
+            /* ── Enquiry button — repositioned above jumpbar ── */
+            #enquiryBtn,
+            .enquiry-btn {
+                right: 10px !important;
+                bottom: 72px !important;
+                font-size: 10px !important;
+                padding: 11px 22px !important;
+                letter-spacing: 1.5px !important;
+                border-radius: 50px !important;
+            }
+
+            /* ── Current Status button — above jumpbar on left ── */
+            .current-status-btn {
+                left: 10px;
+                bottom: 72px;
+                font-size: 9px;
+                padding: 10px 12px;
+                gap: 6px;
+                border-radius: 10px;
+            }
+            .current-status-btn svg { width: 12px; height: 12px; }
+
+            /* ── Music toggle — clear of bottom elements ── */
+            #music-toggle {
+                bottom: 130px;
+                left: 10px;
+                padding: 8px 12px;
+                font-size: 9px;
+                gap: 6px;
+            }
+            #music-toggle span { display: none; }
+
+            /* ── Day-time slider — sits just above jumpbar ── */
+            .day-slider-wrap {
+                bottom: 70px;
+                width: calc(100vw - 24px);
+                padding: 6px 14px;
+            }
+
+            /* ── Jumpbar — full-width pill on mobile ── */
+            .jumpbar {
+                bottom: 12px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: calc(100vw - 24px);
+                max-width: 420px;
+                border-radius: 20px;
+                justify-content: space-around;
+                padding: 4px 6px;
+            }
+
+            .jumpbar-brand {
+                display: none;
+            }
+
+            .jumpbar-nav {
+                width: 100%;
+                justify-content: space-around;
+                padding: 0;
+            }
+
+            .jumpbar-item {
+                flex: 1;
+                justify-content: center;
+                padding: 9px 8px;
+                gap: 5px;
+                font-size: 9px;
+                letter-spacing: 1px;
+            }
+
+            /* Show labels on jumpbar for mobile (small text) */
+            .jumpbar-item span {
+                display: block;
+                font-size: 9px;
+                letter-spacing: 0.8px;
+            }
+
+            .jumpbar-item svg { width: 15px; height: 15px; }
+
+            /* ── Info card on mobile ── */
+            .info-card {
+                top: 50px;
+                left: 10px;
+                transform: scale(0.75);
+                transform-origin: top left;
+            }
+
+            /* ── Left panel (if visible) — bottom row ── */
+            .left-panel {
+                bottom: 130px;
+                left: 10px;
+                right: 10px;
+                top: auto;
+                transform: none;
+                width: auto;
+                flex-direction: row;
+                gap: 8px;
+            }
+
+            /* ── Explore screen mobile tweaks ── */
+            .explore-content {
+                padding: 0 20px 30px;
+                align-items: center;
+            }
+
+            .explore-title {
+                font-size: clamp(24px, 7vw, 38px);
+                text-align: center;
+            }
+
+            .explore-badge {
+                top: 20px;
+                right: 16px;
+            }
+
+            .explore-badge-name { font-size: 16px; }
+            .explore-badge-label { font-size: 7px; }
+
+            /* ── Gallery modal ── */
+            .gallery-close, .walkthrough-close {
+                top: 14px;
+                right: 14px;
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+
+            .gallery-counter { top: 18px; font-size: 11px; }
+
+            .gallery-main { padding: 55px 10px 90px; }
+
+            .gallery-prev { left: 6px; }
+            .gallery-next { right: 6px; }
+
+            .gallery-nav { width: 34px; height: 34px; font-size: 18px; }
+
+            .gallery-thumb { width: 38px; height: 26px; }
+
+            /* ── Walkthrough video — full width ── */
+            .walkthrough-video-wrap {
+                width: 98vw;
+                border-radius: 6px;
+            }
+
+            /* ── Splash screen ── */
+            .splash__content { padding: 0 20px; text-align: center; }
+
+            /* ── Enquiry modal full-screen ── */
+            .enquiry .modal { width: 100vw; border-radius: 0; }
+            .enquiry .modal-header { padding: 16px 16px 12px; }
+            .enquiry .modal-body { padding: 16px; }
+
+            /* ── UI hint position ── */
+            .ui-hint {
+                bottom: 80px;
+            }
+        }
+
+        /* ── Extra small phones ── */
+        @media (max-width: 390px) {
+            .jumpbar-item span { display: none; }
+            .jumpbar-item { padding: 10px 12px; }
+            .jumpbar-item svg { width: 17px; height: 17px; }
+
+            #enquiryBtn,
+            .enquiry-btn {
+                padding: 10px 16px !important;
+                font-size: 9px !important;
+            }
+
+            .current-status-btn {
+                font-size: 8px;
+                padding: 9px 10px;
+            }
+
+            .explore-title {
+                font-size: clamp(22px, 8vw, 32px);
+            }
+        }
+
+        /* ── Landscape phone ── */
+        @media (max-width: 900px) and (orientation: landscape) {
+            .Front {
+                top: 0;
+                left: 0;
+                transform: none;
+                width: 100vw;
+                height: 100dvh;
+            }
+
+            #mainImage {
+                width: 100vw;
+                height: 100dvh;
+                object-fit: contain;
+                object-position: center;
+            }
+
+            .jumpbar {
+                bottom: 8px;
+                padding: 3px 6px;
+            }
+
+            .jumpbar-item { padding: 6px 10px; }
+            .jumpbar-item span { display: none; }
+
+            #enquiryBtn,
+            .enquiry-btn {
+                bottom: 60px !important;
+                right: 10px !important;
+            }
+
+            .current-status-btn {
+                bottom: 60px;
+                left: 10px;
+            }
+
+            .day-slider-wrap { bottom: 58px; }
+
+            #music-toggle { bottom: 110px; left: 10px; }
+        }
+    </style>
 </head>
 
 <body>
@@ -1581,6 +1940,9 @@
                 // Show mute button
                 var btn = document.getElementById('music-toggle');
                 if (btn) btn.style.display = 'flex';
+                // Show day-time slider
+                var sliderWrap = document.getElementById('daySliderWrap');
+                if (sliderWrap) sliderWrap.style.display = 'block';
             }, { once: true });
         }
 
@@ -2274,7 +2636,7 @@
     </script>
 
     <!-- DAY-TIME SLIDER (ADDED) -->
-    <div class="day-slider-wrap">
+    <div class="day-slider-wrap" id="daySliderWrap" style="display:none;">
         <input type="range" id="daySlider" min="0" max="100" value="0" aria-label="Time of Day" />
     </div>
 
