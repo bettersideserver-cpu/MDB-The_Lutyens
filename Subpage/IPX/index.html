@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MDB The Lutyens</title>
     <link rel="stylesheet" href="wbn05d6fbh.css">
     <link rel="stylesheet" href="JS/TowerpinCSS.css">
@@ -605,9 +606,10 @@
            MOBILE — Left/Right Panel adjustments
            ═══════════════════════════════════════════════ */
         @media (max-width: 768px) {
+            /* ── LEFT PANEL: horizontal row, floats above action row ── */
             .left-panel {
                 top: auto;
-                bottom: 110px;
+                bottom: 160px;
                 left: 12px;
                 right: 12px;
                 transform: none;
@@ -626,42 +628,69 @@
 
             .property-type {
                 flex: 1;
-                padding: 12px 14px;
+                padding: 15px 12px;
                 gap: 10px;
                 background: var(--surface-2);
+                border-radius: 18px;
+                min-height: 68px;
+                overflow: visible;
             }
 
             .property-type:hover { transform: none; background: var(--surface-3); }
+            .property-type:active { transform: scale(0.97); }
 
-            .pt-icon { width: 36px; height: 36px; }
-            .pt-icon svg { width: 18px; height: 18px; }
-            .pt-name { font-size: 15px; }
-            .pt-sub { font-size: 9px; letter-spacing: 1.4px; }
+            /* Bigger icons & text */
+            .pt-icon {
+                width: 44px;
+                height: 44px;
+                border-radius: 13px;
+                flex-shrink: 0;
+            }
+            .pt-icon svg { width: 22px; height: 22px; }
+            .pt-text { flex: 1; min-width: 0; overflow: hidden; }
+            .pt-name { font-size: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            .pt-sub { font-size: 9.5px; letter-spacing: 1.4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
             .pt-arrow { display: none; }
 
+            /* ── TOP CONTROLS: bigger, label visible ── */
             .top-controls {
-                top: 12px;
-                right: 12px;
-                gap: 6px;
+                top: 14px;
+                right: 14px;
+                gap: 8px;
             }
 
             .control-btn {
-                padding: 10px;
-                width: 38px;
-                height: 38px;
+                padding: 10px 16px;
+                width: auto;
+                height: 46px;
+                gap: 7px;
+                border-radius: 14px;
+                font-size: 10.5px;
+                letter-spacing: 1.2px;
                 justify-content: center;
             }
 
-            .control-btn span { display: none; }
+            /* Labels visible on mobile */
+            .control-btn span { display: block; }
 
-            .menu-btn { width: 38px; height: 38px; }
+            .menu-btn {
+                width: 46px;
+                height: 46px;
+                border-radius: 14px;
+            }
 
             .dropdown-menu {
-                top: 60px;
-                right: 12px;
-                width: calc(100vw - 24px);
-                max-width: 300px;
+                top: 70px;
+                right: 14px;
+                width: calc(100vw - 28px);
+                max-width: 320px;
             }
+        }
+
+        /* Very small phones — hide button labels */
+        @media (max-width: 380px) {
+            .control-btn span { display: none; }
+            .control-btn { padding: 0; width: 46px; }
         }
 
         /* ═══════════════════════════════════════════════
@@ -717,7 +746,15 @@
         }
 
         @media (max-width: 600px) {
-            .enquiry-btn { font-size: 10px; padding: 13px 28px; letter-spacing: 1.5px; right: 12px; bottom: 14px; border-radius: 50px; }
+            .enquiry-btn {
+                font-size: 11px;
+                padding: 15px 32px;
+                letter-spacing: 1.8px;
+                right: 14px;
+                bottom: 16px;
+                border-radius: 50px;
+                min-height: 50px;
+            }
         }
 
         /* CURRENT STATUS BUTTON */
@@ -769,7 +806,15 @@
         }
         .current-status-btn span { position: relative; z-index: 1; }
         @media (max-width: 600px) {
-            .current-status-btn { left: 12px; bottom: 14px; font-size: 10px; padding: 11px 14px; gap: 7px; }
+            .current-status-btn {
+                left: 14px;
+                bottom: 16px;
+                font-size: 11px;
+                padding: 13px 18px;
+                gap: 9px;
+                min-height: 50px;
+                border-radius: 14px;
+            }
         }
 
         .call-btn {
@@ -1054,35 +1099,7 @@
             to { transform: scale(4); opacity: 0; }
         }
 
-        @media (max-width: 768px) {
-            .jumpbar {
-                bottom: 14px;
-                padding: 4px;
-                gap: 0;
-            }
-
-            .jumpbar-brand {
-                padding: 0 12px 0 14px;
-                height: 36px;
-            }
-
-            .jumpbar-brand-line { font-size: 7px; letter-spacing: 2.5px; }
-            .jumpbar-brand-name { font-size: 13px; }
-
-            .jumpbar-item {
-                padding: 8px 12px;
-                gap: 0;
-            }
-
-            .jumpbar-item span { display: none; }
-
-            .jumpbar-item svg { width: 16px; height: 16px; }
-        }
-
-        @media (max-width: 420px) {
-            .jumpbar-brand { display: none; }
-            .jumpbar-item { padding: 8px 10px; }
-        }
+        /* (redundant mobile jumpbar block removed — see comprehensive block below) */
 
         /* Hide old dock if still present */
         .dock-wrap { display: none !important; }
@@ -1491,6 +1508,363 @@
             0%   { opacity: 1; transform: scale(1); }
             60%  { opacity: 1; transform: scale(1.04); }
             100% { opacity: 0; transform: scale(1.08); }
+        }
+    </style>
+
+    <!-- ═══════════════════════════════════════════════
+         MOBILE RESPONSIVE OVERRIDES
+         ═══════════════════════════════════════════════ -->
+    <style>
+
+        /* ══════════════════════════════════════════════
+           PORTRAIT / VERTICAL SCREEN — Main image layout
+           Image is 3840×5830 (tall portrait).
+           On a vertical phone we fill the screen height.
+           ══════════════════════════════════════════════ */
+        @media (max-width: 768px) and (orientation: portrait) {
+
+            /* Root container: fixed, full viewport */
+            .Front {
+                position: fixed !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100vw !important;
+                height: 100dvh !important;  /* dvh = dynamic viewport height (accounts for browser chrome) */
+                transform: none !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                overflow: hidden !important;
+            }
+
+            /* Image wrapper: fills parent */
+            .Front .image-wrapper {
+                position: relative !important;
+                width: 100% !important;
+                height: 100% !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+
+            /* Main building image: fill height, let width auto (slight side clip = correct) */
+            .Front .image-wrapper img#mainImage,
+            .Front .image-wrapper .blur-up {
+                height: 100dvh !important;
+                width: auto !important;
+                max-width: none !important;
+                object-fit: contain !important;
+                display: block !important;
+                flex-shrink: 0 !important;
+            }
+
+            /* Day/time overlay images: match mainImage exactly (JS also syncs via getBoundingClientRect) */
+            .day-img-overlay {
+                position: fixed !important;
+            }
+
+            /* SVG cutout layer: must match image exactly — it's inside image-wrapper so it inherits */
+            .Front .Cutout {
+                position: absolute !important;
+                top: 50% !important;
+                left: 50% !important;
+                transform: translate(-50%, -50%) !important;
+                height: 100dvh !important;
+                width: auto !important;
+                aspect-ratio: 3840 / 5830 !important;
+            }
+
+            .Front .Cutout svg {
+                width: 100% !important;
+                height: 100% !important;
+                display: block !important;
+            }
+
+            .Front .Cutout svg path {
+                pointer-events: all !important;
+                fill: transparent !important;
+            }
+        }
+
+        /* Fallback for browsers without dvh support */
+        @supports not (height: 100dvh) {
+            @media (max-width: 768px) and (orientation: portrait) {
+                .Front {
+                    height: 100vh !important;
+                }
+                .Front .image-wrapper img#mainImage,
+                .Front .image-wrapper .blur-up {
+                    height: 100vh !important;
+                }
+            }
+        }
+
+        /* ──────────────────────────────────────────────
+           BASE MOBILE FOUNDATION (≤ 768px)
+           –––––––––––––––––––––––––––––––––––––––––––– */
+        @media (max-width: 768px) {
+            html, body {
+                overflow-x: hidden;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            /* ── RERA Badge: top-left, compact ── */
+            .rera-blueprint {
+                top: 14px;
+                left: 10px;
+                transform: scale(0.75);
+                transform-origin: top left;
+                z-index: 9999;
+            }
+
+            /* ── TOP CONTROLS: icon + label, top-right ── */
+            .top-controls {
+                top: 14px;
+                right: 14px;
+                gap: 8px;
+            }
+            .control-btn {
+                height: 46px;
+                padding: 0 16px;
+                gap: 7px;
+                justify-content: center;
+                font-size: 10.5px;
+                letter-spacing: 1.2px;
+                border-radius: 14px;
+            }
+            .control-btn span { display: block; }
+            .menu-btn { width: 46px; height: 46px; border-radius: 14px; }
+
+            /* ── DROPDOWN MENU: stretch to screen ── */
+            .dropdown-menu {
+                top: 58px;
+                right: 10px;
+                left: 10px;
+                width: auto;
+                max-width: none;
+            }
+
+            /* ── JUMPBAR: pinned bottom, full-width pill ── */
+            .jumpbar {
+                bottom: 14px;
+                left: 12px;
+                right: 12px;
+                transform: none !important;
+                width: calc(100% - 24px);
+                max-width: calc(100% - 24px);
+                box-sizing: border-box;
+                justify-content: space-around;
+                padding: 4px 4px;
+                border-radius: 22px;
+                gap: 0;
+                animation: jumpbar-rise-mobile 0.9s var(--ease-out) 0.8s forwards;
+            }
+
+            @keyframes jumpbar-rise-mobile {
+                from { opacity: 0; transform: translateY(24px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+
+            /* Hide brand — items need the space */
+            .jumpbar-brand { display: none !important; }
+
+            /* Full label + icon column layout */
+            .jumpbar-item {
+                flex: 1;
+                flex-direction: column !important;
+                align-items: center;
+                justify-content: center;
+                gap: 4px;
+                padding: 8px 6px;
+                border-radius: 16px;
+                font-size: 10px !important;
+                letter-spacing: 0.8px;
+                white-space: nowrap;
+                min-height: 46px;
+                color: var(--ink-mid);
+            }
+            .jumpbar-item span { display: flex !important; font-size: 10px !important; }
+            .jumpbar-item svg { width: 19px !important; height: 19px !important; stroke: currentColor; fill: none; }
+            .jumpbar-item.is-active { color: var(--ink); background: var(--gold-tint); }
+            .jumpbar-item.is-active svg { stroke: var(--gold); }
+
+            /* ── BOTTOM ACTION ROW: enquiry + current-status side by side ── */
+            .enquiry-btn,
+            #enquiryBtn {
+                right: 14px !important;
+                bottom: 84px !important;
+                font-size: 11px !important;
+                padding: 12px 24px !important;
+                letter-spacing: 1.6px !important;
+                border-radius: 50px !important;
+                min-height: 46px !important;
+            }
+
+            .current-status-btn {
+                left: 14px;
+                bottom: 84px;
+                font-size: 10.5px;
+                padding: 12px 16px;
+                gap: 8px;
+                border-radius: 50px;
+                min-height: 46px;
+            }
+            /* Show "Current Status" label */
+            .current-status-btn span:last-child {
+                display: inline !important;
+                font-size: 10.5px;
+                letter-spacing: 0.8px;
+            }
+
+            /* ── DAY SLIDER: compact, centered, above action row ── */
+            .day-slider-wrap {
+                bottom: 142px;
+                width: min(280px, calc(100vw - 80px));
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%);
+                border-radius: 50px;
+                padding: 5px 14px;
+            }
+
+            /* ── UI HINT: hide on mobile (overlaps top bar) ── */
+            .ui-hint, #ui-hint { display: none !important; }
+
+            /* ── MUSIC TOGGLE: sits left of top controls ── */
+            #music-toggle {
+                bottom: auto !important;
+                top: 14px !important;
+                left: 14px !important;
+                right: auto !important;
+                padding: 12px 18px !important;
+                border-radius: 50px !important;
+                font-size: 11px !important;
+                min-height: 46px !important;
+                gap: 8px !important;
+            }
+            #music-toggle span { display: inline !important; }
+
+            /* ── GALLERY: bigger touch targets ── */
+            .gallery-nav { width: 40px; height: 40px; font-size: 18px; }
+            .gallery-prev { left: 6px; }
+            .gallery-next { right: 6px; }
+            .gallery-main { padding: 60px 12px 90px; }
+            .gallery-close { top: 12px; right: 12px; width: 40px; height: 40px; }
+            .gallery-counter { top: 18px; }
+
+            /* ── WALKTHROUGH MODAL ── */
+            .walkthrough-video-wrap { width: 96vw; border-radius: 8px; }
+            .walkthrough-close { top: 12px; right: 12px; width: 40px; height: 40px; }
+
+            /* ── ENQUIRY MODAL: full width ── */
+            .enquiry .modal { width: 100vw; border-radius: 0; }
+            .enquiry .modal-body { padding: 16px; }
+            .enquiry .modal-header { padding: 16px 16px 12px; }
+
+            /* ── EXPLORE SCREEN ── */
+            .explore-content {
+                align-items: center !important;
+                text-align: center !important;
+                padding: 0 20px 60px !important;
+            }
+            .explore-badge { top: 20px; right: 16px; }
+            .explore-title { font-size: clamp(26px, 8vw, 40px) !important; }
+        }
+
+        /* ──────────────────────────────────────────────
+           SMALL PHONES (≤ 480px) — tighten, don't hide
+           –––––––––––––––––––––––––––––––––––––––––––– */
+        @media (max-width: 480px) {
+            /* Jumpbar: labels stay visible on small phones too */
+            .jumpbar {
+                padding: 4px 4px;
+                bottom: 12px;
+            }
+            .jumpbar-item {
+                font-size: 9.5px !important;
+                padding: 8px 4px;
+                gap: 4px;
+                letter-spacing: 0.7px;
+                min-height: 44px;
+            }
+            .jumpbar-item span { display: flex !important; font-size: 9.5px !important; }
+            .jumpbar-item svg { width: 18px !important; height: 18px !important; }
+
+            /* Keep top controls reasonably sized */
+            .top-controls { gap: 6px; top: 12px; right: 12px; }
+            .control-btn {
+                height: 44px;
+                padding: 0 14px;
+            }
+            .control-btn span { display: block; font-size: 10px; }
+            .menu-btn { width: 44px; height: 44px; }
+            .menu-btn-lines { width: 16px; height: 11px; }
+
+            .rera-blueprint { transform: scale(0.68); transform-origin: top left; }
+
+            /* Music toggle stays left */
+            #music-toggle {
+                bottom: auto !important;
+                top: 12px !important;
+                left: 12px !important;
+                right: auto !important;
+                padding: 11px 16px !important;
+                min-height: 44px !important;
+            }
+            #music-toggle span { display: inline !important; font-size: 10.5px !important; }
+
+            /* Action row */
+            .enquiry-btn,
+            #enquiryBtn {
+                bottom: 80px !important;
+                font-size: 10.5px !important;
+                padding: 11px 22px !important;
+            }
+            .current-status-btn {
+                bottom: 80px;
+                padding: 11px 14px;
+                font-size: 10px;
+            }
+            .current-status-btn span:last-child {
+                display: inline !important;
+                font-size: 10px;
+                letter-spacing: 0.7px;
+            }
+
+            /* Slider: compact, centered, above action row */
+            .day-slider-wrap {
+                bottom: 134px;
+                width: min(260px, calc(100vw - 80px));
+            }
+        }
+
+        /* ──────────────────────────────────────────────
+           VERY SMALL (≤ 360px)
+           –––––––––––––––––––––––––––––––––––––––––––– */
+        @media (max-width: 360px) {
+            .jumpbar { padding: 5px 3px; }
+            .jumpbar-item { padding: 9px 3px; font-size: 9px !important; gap: 4px; min-height: 48px; }
+            .jumpbar-item span { display: flex !important; font-size: 9px !important; }
+            .jumpbar-item svg { width: 18px !important; height: 18px !important; }
+            .control-btn { height: 42px; padding: 0 12px; }
+            .control-btn span { display: block; font-size: 9.5px; }
+            .menu-btn { width: 42px; height: 42px; }
+            .enquiry-btn, #enquiryBtn { font-size: 9.5px !important; padding: 10px 16px !important; bottom: 76px !important; }
+            .current-status-btn { padding: 10px 12px; bottom: 76px; font-size: 9.5px; }
+            .current-status-btn span:last-child { display: inline !important; font-size: 9.5px; }
+            .day-slider-wrap { bottom: 128px; width: min(240px, calc(100vw - 72px)); }
+        }
+
+        /* ──────────────────────────────────────────────
+           SAFE AREA (iPhone notch / home bar)
+           –––––––––––––––––––––––––––––––––––––––––––– */
+        @supports (padding-bottom: env(safe-area-inset-bottom)) {
+            @media (max-width: 768px) {
+                .jumpbar { bottom: calc(14px + env(safe-area-inset-bottom)); }
+                .enquiry-btn, #enquiryBtn { bottom: calc(84px + env(safe-area-inset-bottom)) !important; }
+                .current-status-btn { bottom: calc(84px + env(safe-area-inset-bottom)); }
+                .day-slider-wrap { bottom: calc(142px + env(safe-area-inset-bottom)); }
+            }
         }
     </style>
 </head>
