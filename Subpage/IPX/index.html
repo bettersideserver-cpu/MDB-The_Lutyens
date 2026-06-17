@@ -1969,23 +1969,8 @@
                 // Show mute button
                 var btn = document.getElementById('music-toggle');
                 if (btn) {
-                    btn.style.display = 'flex';
-                    btn.style.pointerEvents = 'auto';
-                    btn.style.touchAction = 'manipulation';
-                    // Touch: handle toggle and block the ghost click (works on all mobile browsers incl. Safari/iPhone)
-                    var _touched = false;
-                    btn.addEventListener('touchend', function(e) {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        _touched = true;
-                        toggleMusic();
-                        setTimeout(function(){ _touched = false; }, 600);
-                    }, { passive: false });
-                    // Desktop click (skipped if triggered by touch)
-                    btn.addEventListener('click', function(e) {
-                        if (_touched) return;
-                        toggleMusic();
-                    });
+                    btn.style.cssText += 'display:flex!important;pointer-events:auto!important;touch-action:manipulation!important;z-index:99999!important;position:fixed!important;';
+                    btn.onclick = function(e) { e.stopPropagation(); toggleMusic(); };
                 }
             }, { once: true });
         }
@@ -1999,24 +1984,33 @@
             var label   = document.getElementById('music-label');
             if (!audio) return;
             if (_musicMuted) {
-                // Unmute — fade in
+                // Unmute — ensure playing first (iOS needs this)
                 audio.muted = false;
-                var v = 0;
-                var fi = setInterval(function() {
-                    v = Math.min(v + 0.03, _savedVol);
-                    audio.volume = v;
-                    if (v >= _savedVol) clearInterval(fi);
-                }, 40);
+                if (audio.paused) {
+                    audio.volume = _savedVol;
+                    audio.play().catch(function(){});
+                } else {
+                    var v = 0;
+                    var fi = setInterval(function() {
+                        v = Math.min(v + 0.03, _savedVol);
+                        audio.volume = v;
+                        if (v >= _savedVol) clearInterval(fi);
+                    }, 40);
+                }
                 iconOn.style.display  = '';
                 iconOff.style.display = 'none';
                 label.textContent = 'Mute';
                 _musicMuted = false;
             } else {
-                // Mute — fade out
+                // Mute — fade out then pause
                 _savedVol = audio.volume || 0.65;
                 var fo = setInterval(function() {
                     audio.volume = Math.max(audio.volume - 0.04, 0);
-                    if (audio.volume <= 0) { audio.muted = true; clearInterval(fo); }
+                    if (audio.volume <= 0) {
+                        audio.muted = true;
+                        audio.pause();
+                        clearInterval(fo);
+                    }
                 }, 40);
                 iconOn.style.display  = 'none';
                 iconOff.style.display = '';
