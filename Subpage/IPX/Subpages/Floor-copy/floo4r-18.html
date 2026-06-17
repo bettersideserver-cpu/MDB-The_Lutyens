@@ -71,14 +71,14 @@
 
 
         .Cutout path:hover {
-                fill: transparent !important;
+                   fill: transparent !important;
         stroke: transparent !important;
         }
 
 
         .Cutout path.selected {
-            fill: transparent !important;
-            stroke: transparent !important;
+                     fill: transparent !important;
+        stroke: transparent !important;
         }
 
         .lobby-top {
@@ -323,8 +323,12 @@
 
         @media (max-width: 600px) {
             .close-btn2 {
-                top: 50px;
-                left: 30px;
+                top: 16px;
+                left: 16px;
+                width: 60px;
+                height: 60px;
+                border-radius: 16px;
+                font-size: 28px;
             }
 
             .touch-button {
@@ -371,29 +375,40 @@
             white-space: nowrap;
             pointer-events: none;
         }
-    
-#aptTooltip {
-  position: fixed;
-  background: #1a1a1a;
-  border: 1px solid rgba(201,168,124,0.35);
-  border-radius: 6px;
-  padding: 8px 12px;
-  pointer-events: none;
-  display: none;
-  z-index: 9999;
-  white-space: nowrap;
-}
-.tt-bhk {
-  color: #ffffff;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-.tt-area {
-  color: #aaaaaa;
-  margin-top: 2px;
-}
 
-        /* ── MOBILE RESPONSIVE ── */
+        /* ── APT TOOLTIP ── */
+        #aptTooltip {
+            position: fixed;
+            z-index: 99999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.18s ease, transform 0.18s ease;
+            background: #1a1a1a;
+            border: 1px solid rgba(201,168,124,0.35);
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-family: sans-serif;
+            color: #f0f0f0;
+            white-space: nowrap;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.55);
+        }
+        #aptTooltip.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #aptTooltip .tt-bhk {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 3px;
+        }
+        #aptTooltip .tt-area {
+            font-size: 13px;
+            color: #aaaaaa;
+        }
+
+        /* ── DOCK BAR MOBILE ── */
         @media (max-width: 600px) {
             html, body {
                 overflow: hidden !important;
@@ -404,12 +419,8 @@
                 padding-bottom: 70px;
             }
             .close-btn2 {
-                top: 16px;
-                left: 16px;
-                width: 60px;
-                height: 60px;
-                border-radius: 16px;
-                font-size: 28px;
+                top: 50px;
+                left: 30px;
             }
             .touch-button {
                 --btn-scale: 0.75;
@@ -526,14 +537,14 @@
             color: #111 !important;
             font-size: 26px !important;
         }
-</style>
+    </style>
 </head>
 
 <body>
     <!-- <div class="floor-badge">Floor 3</div> -->
 
 
-    <script src="../../JS/BackButton.js"></script>
+
 
 
     <!-- Button (use JS click handler so message is built fresh on click)
@@ -553,26 +564,26 @@
     <div class="lobby-top">
         <div class="content-wrapper">
             <!-- <img src="./../../images/Apparments/1BHK/Lobby_Top.jpg" alt="Penthouse Lobby Image" /> -->
-            <img id="mainImage" src="images/Penthouse-19.jpg" data-full="images/Penthouse-19.jpg" alt="Home"
-                fetchpriority="high" decoding="async" width="4096" height="4096" class="blur-up" />
+            <img id="mainImage" src="images/Tower_A_18_Floor.jpg" data-full="images/Tower_A_18_Floor.jpg" alt="Home" fetchpriority="high"
+                decoding="async" width="4096" height="4096" class="blur-up" />
             <div class="Cutout">
 
-                   <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" viewBox="0 0 3840 5758">
-                    <path id="Appartment_x5F_5" data-bhk="Penthouse" data-area="2,122.26 sq ft" data-link="../A-penthouse/Penthouse.html?room=lobby_1"
-                        d="M714.61 2667.74v234.25H564.8v56.92h36.04v235.12h-45.83l-6.17-14.18v-8.55h-296.1v25l-12.34 14.61H123.09v-588.25h115.29l14.82 17.48v27.54h367.34l8.66-16.26h12.77v15.91z" />
-                    <path id="Appartment_x5F_4" data-bhk="Penthouse" data-area="2,122.26 sq ft" data-link="../A-penthouse/Penthouse.html?room=lobby_1"
-                        d="M714.61 2667.74v234.25h149.81v56.92h-36.04v235.12h45.84l6.16-14.18v-8.55h296.1v25l12.34 14.61h117.32v-588.25h-115.29l-14.83 17.48v27.54H808.69l-8.66-16.26h-12.77v15.91z" />
-                    <path id="Appartment_x5F_3" data-bhk="Penthouse" data-area="2,122.26 sq ft" data-link="../A-penthouse/Penthouse.html?room=lobby_1"
-                        d="M1897.66 2667.74v234.25h-149.81v56.92h36.04v235.12h-45.83l-6.17-14.18v-8.55h-296.1v25l-12.34 14.61h-117.31v-588.25h115.28l14.83 17.48v27.54h367.34l8.65-16.26h12.78v15.91z" />
-                    <path id="Appartment_x5F_1" data-bhk="Penthouse" data-area="2,122.26 sq ft" data-link="../A-penthouse/Penthouse.html?room=lobby_1"
-                        d="M3075.04 2667.74v234.25h-149.81v56.92h36.04v235.12h-45.83l-6.17-14.18v-8.55h-296.1v25l-12.34 14.61h-117.31v-588.25h115.28l14.83 17.48v27.54h367.34l8.65-16.26h12.77v15.91z" />
-                    <path id="Appartment_x5F_2" data-bhk="Penthouse" data-area="2,122.26 sq ft" data-link="../A-penthouse/Penthouse.html?room=lobby_1"
-                        d="M1897.66 2667.74v234.25h148.37v56.92h-35.69v235.12h45.39l6.11-14.18v-8.55h293.27v25l12.22 14.61h116.19v-588.25h-114.19l-14.68 17.48v27.54h-363.82l-8.57-16.26h-12.65v15.91z" />
+                <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" viewBox="0 0 3840 5758">
+                    <path id="Apparment_x5F_1" data-bhk="3 BHK+" data-area="2,122.26  sq ft" data-link="../A-Typical/Typical.html"
+                        d="M163.4 2623.26v616.25h114.94v-30.3h316.94v11.24h47.32v-245.71h-38.22v-61.95h72.77v-264H279.23v-25.53z" />
+                    <path id="Apparment_x5F_2" data-bhk="3 BHK+" data-area="2,122.26  sq ft" data-link="../A-Typical/Typical.html"
+                        d="M1350.13 2623.26v616.25h-114.94v-30.3H918.26v11.24h-47.32v-245.71h38.21v-61.95h-72.77v-264h397.92v-25.53z" />
+                    <path id="Apparment_x5F_3" data-bhk="3 BHK+" data-area="2,122.26 sq ft" data-link="../A-Typical/Typical.html"
+                        d="M1350.13 2623.26v616.25h114.93v-30.3H1782v11.24h47.32v-245.71h-38.21v-61.95h72.76v-264h-397.91v-25.53z" />
+                    <path id="Apparment_x5F_4" data-bhk="3 BHK+" data-area="2,122.26  sq ft" data-link="../A-Typical/Typical.html"
+                        d="M2536.85 2623.26v616.25h-114.94v-30.3h-316.93v11.24h-47.32v-245.71h38.21v-61.95h-72.76v-264h397.91v-25.53z" />
+                    <path id="Apparment_x5F_5" data-bhk="Skyvilla" data-area="4,215.18  sq ft" data-link="../A-skyvilla/360/SkyVilla_Tour.html"
+                        d="M3748.85 2769.21v327.32h-28.59v142.98h-114.39v-29.62h-316.59v11.24h-44.43v-229.28h-228.81v228.6h-47.32v-11.24h-316.93v30.3h-114.94v-616.25h115.83v25.53h951.66v-25.53h116.43v145.95z" />
                 </svg>
             </div>
         </div>
     </div>
-
+    <script src="../../../../JS/BackButton.js"></script>
     <!-- <div id="videoOverlay" class="video-overlay">
         <video id="walkthroughVideo" controls preload="none">
             <source src="./../../Video/Lutyen Lobby.webm" type="video/webm">
@@ -679,8 +690,7 @@
     <script src="JS/s2dlrxbqxj.js"></script>
     <script src="JS/ekdxgbwr0o.js"></script>
 
-    
-
+   
     <script>
         window.addEventListener('DOMContentLoaded', () => {
             const detailsBox = document.getElementById('details');
@@ -814,147 +824,162 @@
 
 
 
-<div id="aptTooltip">
-  <div class="tt-bhk" id="ttBhk">3 BHK</div>
-  <div class="tt-area" id="ttArea">1800 sq ft</div>
-</div>
 
-<!-- MOBILE APT TAP PANEL -->
-<div id="mobileAptPanel">
-    <div id="mAptBhk"></div>
-    <div id="mAptArea"></div>
-</div>
+    <!-- APT HOVER TOOLTIP -->
+    <div id="aptTooltip">
+        <div class="tt-bhk" id="ttBhk">3 BHK</div>
+        <div class="tt-area" id="ttArea">1800 sq ft</div>
+    </div>
 
-<script>
-(function() {
-  const tooltip = document.getElementById('aptTooltip');
-  const ttBhk   = document.getElementById('ttBhk');
-  const ttArea  = document.getElementById('ttArea');
-
-  document.querySelectorAll('[data-bhk]').forEach(el => {
-    el.style.cursor = 'pointer';
-    el.addEventListener('mouseenter', e => {
-      ttBhk.textContent  = el.dataset.bhk;
-      ttArea.textContent = el.dataset.area;
-      tooltip.style.display = 'block';
-    });
-    el.addEventListener('mousemove', e => {
-      tooltip.style.left = (e.clientX + 14) + 'px';
-      tooltip.style.top  = (e.clientY + 14) + 'px';
-    });
-    el.addEventListener('mouseleave', () => {
-      tooltip.style.display = 'none';
-    });
-  });
-})();
-</script>
-
-<script>
-/* Mobile: tap apartment path -> show panel */
-(function() {
-    const panel = document.getElementById('mobileAptPanel');
-    const mBhk  = document.getElementById('mAptBhk');
-    const mArea = document.getElementById('mAptArea');
-    if (!panel) return;
-    let hideTimer = null;
-    function showPanel(bhk, area) {
-        mBhk.textContent  = bhk  || '—';
-        mArea.textContent = area || '—';
-        panel.style.opacity   = '1';
-        panel.style.transform = 'translateX(-50%) translateY(0)';
-        panel.style.pointerEvents = 'auto';
-        clearTimeout(hideTimer);
-        hideTimer = setTimeout(hidePanel, 3000);
-    }
-    function hidePanel() {
-        panel.style.opacity   = '0';
-        panel.style.transform = 'translateX(-50%) translateY(20px)';
-        panel.style.pointerEvents = 'none';
-    }
-    document.querySelectorAll('[data-bhk]').forEach(function(el) {
-        el.addEventListener('touchstart', function(e) {
-            e.stopPropagation();
-            showPanel(el.dataset.bhk, el.dataset.area);
-        }, { passive: true });
-    });
-    panel.addEventListener('click', hidePanel);
-})();
-</script>
-
-<!-- INFO BOX injected & managed by JS at end of body (mobile only) -->
-<script>
-(function() {
-    function isMobile() {
-        var touch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-        var smallScreen = Math.min(screen.width, screen.height) <= 820;
-        var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-        return (touch && (smallScreen || coarse)) || window.innerWidth <= 600;
-    }
-
-    function buildBox() {
-        var box = document.getElementById('infoBox');
-        if (!box) {
-            box = document.createElement('div');
-            box.id = 'infoBox';
-            box.innerHTML = '<strong>Penthouse</strong><br>Total Area: 2,122.26 sq ft';
-            document.body.appendChild(box);
-        }
-        if (document.body.lastElementChild !== box) document.body.appendChild(box);
-        applyStyle(box);
-        return box;
-    }
-
-    function applyStyle(box) {
-        var show = isMobile();
-        var css = {
-            'position': 'fixed',
-            'top': '38%',
-            'left': '50%',
-            'transform': 'translate(-50%, -50%)',
-            'margin': '0',
-            'width': 'max-content',
-            'max-width': '86vw',
-            'z-index': '2147483647',
-            'background': 'rgba(255,255,255,0.92)',
-            'backdrop-filter': 'blur(16px)',
-            '-webkit-backdrop-filter': 'blur(16px)',
-            'padding': '24px 48px',
-            'border-radius': '18px',
-            'font-family': 'sans-serif',
-            'border': '1px solid rgba(255,255,255,0.6)',
-            'box-shadow': '0 10px 40px rgba(0,0,0,0.3)',
-            'white-space': 'nowrap',
-            'pointer-events': 'none',
-            'text-align': 'center',
-            'font-size': '24px',
-            'color': '#111',
-            'font-weight': '500',
-            'line-height': '1.8',
-            'visibility': show ? 'visible' : 'hidden',
-            'opacity': show ? '1' : '0',
-            'display': show ? 'block' : 'none'
-        };
-        for (var k in css) box.style.setProperty(k, css[k], 'important');
-    }
-
-    function tick() { buildBox(); }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', tick);
-    } else { tick(); }
-    window.addEventListener('load', tick);
-    window.addEventListener('resize', tick);
-    var n = 0, iv = setInterval(function(){ tick(); if (++n > 20) clearInterval(iv); }, 250);
-})();
-</script>
+    <!-- MOBILE APT TAP PANEL -->
+    <div id="mobileAptPanel">
+        <div id="mAptBhk"></div>
+        <div id="mAptArea"></div>
+    </div>
 
     <script>
-        // Force fresh reload when user navigates back (fixes SVG re-selection)
-        window.addEventListener('pageshow', function(e) {
-            if (e.persisted) {
-                window.location.reload();
-            }
+    (function() {
+        const tooltip = document.getElementById('aptTooltip');
+        const ttBhk   = document.getElementById('ttBhk');
+        const ttArea  = document.getElementById('ttArea');
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', function(e) {
+            mouseX = e.clientX; mouseY = e.clientY;
+            if (tooltip.classList.contains('visible')) positionTooltip();
         });
+        function positionTooltip() {
+            const tw = tooltip.offsetWidth, th = tooltip.offsetHeight;
+            let x = mouseX + 18, y = mouseY + 18;
+            if (x + tw > window.innerWidth - 10)  x = mouseX - tw - 14;
+            if (y + th > window.innerHeight - 10) y = mouseY - th - 14;
+            tooltip.style.left = x + 'px'; tooltip.style.top = y + 'px';
+        }
+        document.querySelectorAll('.Cutout path').forEach(function(path) {
+            const bhk  = path.getAttribute('data-bhk');
+            const area = path.getAttribute('data-area');
+            if (!bhk && !area) return;
+            path.addEventListener('mouseenter', function() {
+                ttBhk.textContent  = bhk  || '—';
+                ttArea.textContent = area || '—';
+                positionTooltip();
+                tooltip.classList.add('visible');
+            });
+            path.addEventListener('mouseleave', function() {
+                tooltip.classList.remove('visible');
+            });
+        });
+    })();
+    </script>
+
+    <script>
+    /* Mobile: tap apartment path -> show panel */
+    (function() {
+        const panel = document.getElementById('mobileAptPanel');
+        const mBhk  = document.getElementById('mAptBhk');
+        const mArea = document.getElementById('mAptArea');
+        if (!panel) return;
+        let hideTimer = null;
+        function showPanel(bhk, area) {
+            mBhk.textContent  = bhk  || '—';
+            mArea.textContent = area || '—';
+            panel.style.opacity   = '1';
+            panel.style.transform = 'translateX(-50%) translateY(0)';
+            panel.style.pointerEvents = 'auto';
+            clearTimeout(hideTimer);
+            hideTimer = setTimeout(hidePanel, 3000);
+        }
+        function hidePanel() {
+            panel.style.opacity   = '0';
+            panel.style.transform = 'translateX(-50%) translateY(20px)';
+            panel.style.pointerEvents = 'none';
+        }
+        document.querySelectorAll('.Cutout path').forEach(function(path) {
+            const bhk  = path.getAttribute('data-bhk');
+            const area = path.getAttribute('data-area');
+            if (!bhk && !area) return;
+            path.addEventListener('touchstart', function(e) {
+                e.stopPropagation();
+                showPanel(bhk, area);
+            }, { passive: true });
+        });
+        panel.addEventListener('click', hidePanel);
+    })();
+    </script>
+
+    <!-- INFO BOX injected & managed by JS at end of body (mobile only) -->
+    <script>
+        // Info-box: bulletproof mobile-only badge. Re-injected on top layer
+        // and re-asserted repeatedly so no late-loading script can hide/cover it.
+        (function() {
+            // Page has no viewport meta, so innerWidth can be ~980 on phones.
+            // Detect a real phone via touch + screen width, with innerWidth fallback.
+            function isMobile() {
+                var touch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+                var smallScreen = Math.min(screen.width, screen.height) <= 820;
+                var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+                return (touch && (smallScreen || coarse)) || window.innerWidth <= 600;
+            }
+
+            function buildBox() {
+                var box = document.getElementById('infoBox');
+                if (!box) {
+                    box = document.createElement('div');
+                    box.id = 'infoBox';
+                    box.innerHTML =
+                        '<strong>Typical Floor:</strong> 1rd \u2013 17th &nbsp;|&nbsp; 2,122.26 sq ft' +
+                        '<br>' +
+                        '<strong>Skyvilla:</strong> 18th Floor &nbsp;|&nbsp; 4,215.18 sq ft';
+                    document.body.appendChild(box);
+                }
+                // Keep it as the very last child of body (top of DOM paint order)
+                if (document.body.lastElementChild !== box) document.body.appendChild(box);
+                applyStyle(box);
+                return box;
+            }
+
+            function applyStyle(box) {
+                var show = isMobile();
+                var css = {
+                    'position': 'fixed',
+                    'top': '38%',
+                    'left': '50%',
+                    'transform': 'translate(-50%, -50%)',
+                    'margin': '0',
+                    'width': 'max-content',
+                    'max-width': '86vw',
+                    'z-index': '2147483647',
+                    'background': 'rgba(255,255,255,0.92)',
+                    'backdrop-filter': 'blur(16px)',
+                    '-webkit-backdrop-filter': 'blur(16px)',
+                    'padding': '24px 48px',
+                    'border-radius': '18px',
+                    'font-family': 'sans-serif',
+                    'border': '1px solid rgba(255,255,255,0.6)',
+                    'box-shadow': '0 10px 40px rgba(0,0,0,0.3)',
+                    'white-space': 'nowrap',
+                    'pointer-events': 'none',
+                    'text-align': 'center',
+                    'font-size': '24px',
+                    'color': '#111',
+                    'font-weight': '500',
+                    'line-height': '1.8',
+                    'visibility': show ? 'visible' : 'hidden',
+                    'opacity': show ? '1' : '0',
+                    'display': show ? 'block' : 'none'
+                };
+                for (var k in css) box.style.setProperty(k, css[k], 'important');
+            }
+
+            function tick() { buildBox(); }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', tick);
+            } else { tick(); }
+            window.addEventListener('load', tick);
+            window.addEventListener('resize', tick);
+            // Re-assert for 5s to defeat any late script that removes/covers it
+            var n = 0, iv = setInterval(function(){ tick(); if (++n > 20) clearInterval(iv); }, 250);
+        })();
     </script>
 </body>
 

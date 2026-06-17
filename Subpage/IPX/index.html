@@ -1984,34 +1984,19 @@
             var label   = document.getElementById('music-label');
             if (!audio) return;
             if (_musicMuted) {
-                // Unmute — ensure playing first (iOS needs this)
+                // UNMUTE — call play() synchronously inside gesture on iOS
                 audio.muted = false;
-                if (audio.paused) {
-                    audio.volume = _savedVol;
-                    audio.play().catch(function(){});
-                } else {
-                    var v = 0;
-                    var fi = setInterval(function() {
-                        v = Math.min(v + 0.03, _savedVol);
-                        audio.volume = v;
-                        if (v >= _savedVol) clearInterval(fi);
-                    }, 40);
-                }
+                audio.volume = _savedVol;
+                audio.play().catch(function(){});
                 iconOn.style.display  = '';
                 iconOff.style.display = 'none';
                 label.textContent = 'Mute';
                 _musicMuted = false;
             } else {
-                // Mute — fade out then pause
-                _savedVol = audio.volume || 0.65;
-                var fo = setInterval(function() {
-                    audio.volume = Math.max(audio.volume - 0.04, 0);
-                    if (audio.volume <= 0) {
-                        audio.muted = true;
-                        audio.pause();
-                        clearInterval(fo);
-                    }
-                }, 40);
+                // MUTE — pause immediately (no setInterval: iOS blocks gesture-deferred audio)
+                _savedVol = audio.volume > 0 ? audio.volume : 0.65;
+                audio.pause();
+                audio.muted = true;
                 iconOn.style.display  = 'none';
                 iconOff.style.display = '';
                 label.textContent = 'Unmute';

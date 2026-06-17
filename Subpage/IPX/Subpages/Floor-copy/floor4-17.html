@@ -77,8 +77,8 @@
 
 
         .Cutout path.selected {
-            fill: transparent !important;
-            stroke: transparent !important;
+                    fill: transparent !important;
+        stroke: transparent !important;
         }
 
         .lobby-top {
@@ -109,16 +109,18 @@
 
         @media (max-width: 600px) {
             .lobby-top {
-                overflow: hidden;
+                overflow: visible;
                 cursor: grab;
                 align-items: flex-start;
                 justify-content: flex-start;
+                position: relative;
             }
 
             .lobby-top.dragging {
                 cursor: grabbing;
             }
 
+            /* content-wrapper is the pannable container — image + SVG cutout both move together */
             .content-wrapper {
                 position: absolute;
                 top: 0;
@@ -126,6 +128,7 @@
                 width: auto;
                 height: 100vh;
                 will-change: transform;
+                flex-shrink: 0;
             }
 
             .content-wrapper img {
@@ -136,22 +139,24 @@
                 object-fit: fill;
             }
 
+            /* Cutout must be absolute inside wrapper (not fixed) so it pans with image */
             .Cutout {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                transform: none;
+                position: absolute !important;
+                top: 0 !important;
+                left: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                transform: none !important;
+                overflow: visible;
             }
 
+            /* SVG fills container; preserveAspectRatio="xMidYMid slice" handles scaling */
             .Cutout svg {
-                top: 0;
-                left: 0;
-                transform: none;
-                /* 🔥 IMPORTANT */
-                width: 100%;
-                height: 100%;
+                position: absolute;
+                /* top: -26vh;
+                left: 0; */
+                /* width: 100% !important;
+                height: 150% !important; */
                 min-width: unset;
                 min-height: unset;
             }
@@ -323,8 +328,12 @@
 
         @media (max-width: 600px) {
             .close-btn2 {
-                top: 50px;
-                left: 30px;
+                top: 16px;
+                left: 16px;
+                width: 56px;
+                height: 56px;
+                border-radius: 16px;
+                font-size: 26px;
             }
 
             .touch-button {
@@ -371,51 +380,155 @@
             white-space: nowrap;
             pointer-events: none;
         }
-    
-#aptTooltip {
-  position: fixed;
-  background: #1a1a1a;
-  border: 1px solid rgba(201,168,124,0.35);
-  border-radius: 6px;
-  padding: 8px 12px;
-  pointer-events: none;
-  display: none;
-  z-index: 9999;
-  white-space: nowrap;
-}
-.tt-bhk {
-  color: #ffffff;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-.tt-area {
-  color: #aaaaaa;
-  margin-top: 2px;
-}
 
-        /* ── MOBILE RESPONSIVE ── */
+        /* ── APT TOOLTIP ── */
+        #aptTooltip {
+            position: fixed;
+            z-index: 99999;
+            pointer-events: none;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.18s ease, transform 0.18s ease;
+            background: #1a1a1a;
+            border: 1px solid rgba(201,168,124,0.35);
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-family: sans-serif;
+            color: #f0f0f0;
+            white-space: nowrap;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.55);
+        }
+        #aptTooltip.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #aptTooltip .tt-bhk {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 3px;
+        }
+        #aptTooltip .tt-area {
+            font-size: 13px;
+            color: #aaaaaa;
+        }
+
+        /* ── DOCK BAR MOBILE ── */
         @media (max-width: 600px) {
-            html, body {
-                overflow: hidden !important;
-                height: 100% !important;
-                max-height: 100vh !important;
+            .dock-wrap {
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                transform: none !important;
+                width: 100% !important;
+                border-radius: 0 !important;
+                padding: 0 !important;
             }
+            .dock-shelf {
+                border-radius: 0 !important;
+                width: 100% !important;
+            }
+            .dock-items {
+                display: flex !important;
+                flex-direction: row !important;
+                justify-content: space-around !important;
+                align-items: center !important;
+                width: 100% !important;
+                padding: 6px 4px 10px !important;
+                gap: 0 !important;
+            }
+            .dock-item {
+                flex: 1 !important;
+                display: flex !important;
+                flex-direction: column !important;
+                align-items: center !important;
+                justify-content: center !important;
+                width: auto !important;
+                min-width: 0 !important;
+                gap: 4px !important;
+            }
+            .dock-icon {
+                width: 44px !important;
+                height: 44px !important;
+                border-radius: 12px !important;
+                flex-shrink: 0 !important;
+            }
+            .dock-icon svg {
+                width: 22px !important;
+                height: 22px !important;
+            }
+            .dock-item-label {
+                display: block !important;
+                font-size: 10px !important;
+                color: rgba(255,255,255,0.7) !important;
+                text-align: center !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                max-width: 64px !important;
+            }
+            .dock-label {
+                display: none !important;
+            }
+            .dock-divider {
+                display: none !important;
+            }
+            .dock-dot {
+                display: none !important;
+            }
+        }
+
+        /* ── MOBILE APT TAP PANEL ── */
+        #mobileAptPanel {
+            display: none;
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            z-index: 99999;
+            background: #1a1a1a;
+            border: 1px solid rgba(201,168,124,0.35);
+            border-radius: 16px;
+            padding: 14px 28px;
+            font-family: sans-serif;
+            color: #f0f0f0;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+            opacity: 0;
+            transition: opacity 0.22s ease, transform 0.22s ease;
+            pointer-events: none;
+            min-width: 180px;
+        }
+        #mobileAptPanel #mAptBhk {
+            font-size: 16px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        #mobileAptPanel #mAptArea {
+            font-size: 13px;
+            color: #aaa;
+        }
+        @media (max-width: 600px) {
+            #mobileAptPanel { display: block; }
+            #aptTooltip { display: none !important; }
+        }
+
+        @media (max-width: 600px) {
+            /* Prevent dock from covering floor plan content */
             .lobby-top {
                 padding-bottom: 70px;
             }
+            /* Larger, easier-to-tap close button */
             .close-btn2 {
-                top: 16px;
-                left: 16px;
-                width: 60px;
-                height: 60px;
-                border-radius: 16px;
-                font-size: 28px;
+                top: 16px !important;
+                left: 16px !important;
+                width: 80px !important;
+                height: 80px !important;
+                border-radius: 20px !important;
+                font-size: 36px !important;
             }
-            .touch-button {
-                --btn-scale: 0.75;
-                font-size: 14px;
-                padding: 10px 10px;
-            }
+            /* Floor pill - move below close button area */
             .floor-pill {
                 top: 16px;
                 right: 16px;
@@ -425,8 +538,15 @@
                 padding: 8px 18px;
                 top: 16px;
             }
-            #aptTooltip { display: none !important; }
-            #mobileAptPanel { display: block; }
+        }
+
+        /* HARD OVERRIDE — external CSS fix */
+        @media (max-width: 600px) {
+            html, body {
+                overflow: hidden !important;
+                height: 100% !important;
+                max-height: 100vh !important;
+            }
             .dock-wrap {
                 position: fixed !important;
                 bottom: 0 !important;
@@ -473,51 +593,9 @@
                 max-width: 22px !important;
                 max-height: 22px !important;
             }
-            .dock-item-label {
-                display: block !important;
-                font-size: 10px !important;
-                color: rgba(255,255,255,0.7) !important;
-                text-align: center !important;
-                white-space: nowrap !important;
-                overflow: hidden !important;
-                text-overflow: ellipsis !important;
-                max-width: 64px !important;
+            .dock-divider {
+                display: none !important;
             }
-            .dock-label { display: none !important; }
-            .dock-divider { display: none !important; }
-            .dock-dot { display: none !important; }
-        }
-
-        /* ── MOBILE APT TAP PANEL ── */
-        #mobileAptPanel {
-            display: none;
-            position: fixed;
-            bottom: 90px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            z-index: 99999;
-            background: #1a1a1a;
-            border: 1px solid rgba(201,168,124,0.35);
-            border-radius: 16px;
-            padding: 14px 28px;
-            font-family: sans-serif;
-            color: #f0f0f0;
-            text-align: center;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-            opacity: 0;
-            transition: opacity 0.22s ease, transform 0.22s ease;
-            pointer-events: none;
-            min-width: 180px;
-        }
-        #mobileAptPanel #mAptBhk {
-            font-size: 16px;
-            font-weight: 700;
-            color: #fff;
-            margin-bottom: 4px;
-        }
-        #mobileAptPanel #mAptArea {
-            font-size: 13px;
-            color: #aaa;
         }
 
         /* ── INFO BOX ── (styled entirely via JS; mobile-only) */
@@ -526,14 +604,15 @@
             color: #111 !important;
             font-size: 26px !important;
         }
-</style>
+
+    </style>
 </head>
 
 <body>
     <!-- <div class="floor-badge">Floor 3</div> -->
 
 
-    <script src="../../JS/BackButton.js"></script>
+
 
 
     <!-- Button (use JS click handler so message is built fresh on click)
@@ -549,30 +628,29 @@
         </svg>
     </button>
     <div id="waLabel" class="wa-label">Chat on WhatsApp</div> -->
+    <!-- INFO BOX injected & managed by JS at end of body (mobile only) -->
+    
     <button class="close-btn2" id="closeCard" style="width:60px!important;height:60px!important;font-size:28px!important;top:16px!important;left:16px!important;position:fixed!important;z-index:99999!important;background-color:#2c2c2c!important;color:white!important;border:none!important;border-radius:16px!important;display:flex!important;align-items:center!important;justify-content:center!important;cursor:pointer!important;">←</button>
-    <div class="lobby-top">
+        <div class="lobby-top">
         <div class="content-wrapper">
             <!-- <img src="./../../images/Apparments/1BHK/Lobby_Top.jpg" alt="Penthouse Lobby Image" /> -->
-            <img id="mainImage" src="images/Penthouse-19.jpg" data-full="images/Penthouse-19.jpg" alt="Home"
-                fetchpriority="high" decoding="async" width="4096" height="4096" class="blur-up" />
+            <img id="mainImage" src="images/1-17.jpg" data-full="images/1-17.jpg" alt="Home" fetchpriority="high"
+                decoding="async" width="3840" height="5758" class="blur-up" />
             <div class="Cutout">
 
-                   <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" viewBox="0 0 3840 5758">
-                    <path id="Appartment_x5F_5" data-bhk="Penthouse" data-area="2,122.26 sq ft" data-link="../A-penthouse/Penthouse.html?room=lobby_1"
-                        d="M714.61 2667.74v234.25H564.8v56.92h36.04v235.12h-45.83l-6.17-14.18v-8.55h-296.1v25l-12.34 14.61H123.09v-588.25h115.29l14.82 17.48v27.54h367.34l8.66-16.26h12.77v15.91z" />
-                    <path id="Appartment_x5F_4" data-bhk="Penthouse" data-area="2,122.26 sq ft" data-link="../A-penthouse/Penthouse.html?room=lobby_1"
-                        d="M714.61 2667.74v234.25h149.81v56.92h-36.04v235.12h45.84l6.16-14.18v-8.55h296.1v25l12.34 14.61h117.32v-588.25h-115.29l-14.83 17.48v27.54H808.69l-8.66-16.26h-12.77v15.91z" />
-                    <path id="Appartment_x5F_3" data-bhk="Penthouse" data-area="2,122.26 sq ft" data-link="../A-penthouse/Penthouse.html?room=lobby_1"
-                        d="M1897.66 2667.74v234.25h-149.81v56.92h36.04v235.12h-45.83l-6.17-14.18v-8.55h-296.1v25l-12.34 14.61h-117.31v-588.25h115.28l14.83 17.48v27.54h367.34l8.65-16.26h12.78v15.91z" />
-                    <path id="Appartment_x5F_1" data-bhk="Penthouse" data-area="2,122.26 sq ft" data-link="../A-penthouse/Penthouse.html?room=lobby_1"
-                        d="M3075.04 2667.74v234.25h-149.81v56.92h36.04v235.12h-45.83l-6.17-14.18v-8.55h-296.1v25l-12.34 14.61h-117.31v-588.25h115.28l14.83 17.48v27.54h367.34l8.65-16.26h12.77v15.91z" />
-                    <path id="Appartment_x5F_2" data-bhk="Penthouse" data-area="2,122.26 sq ft" data-link="../A-penthouse/Penthouse.html?room=lobby_1"
-                        d="M1897.66 2667.74v234.25h148.37v56.92h-35.69v235.12h45.39l6.11-14.18v-8.55h293.27v25l12.22 14.61h116.19v-588.25h-114.19l-14.68 17.48v27.54h-363.82l-8.57-16.26h-12.65v15.91z" />
+                <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" viewBox="0 0 3840 5758" preserveAspectRatio="xMidYMid slice">
+                    <defs><style>.st0{fill:#fff}</style></defs>
+                    <path id="Appartment_x5F_1" data-bhk="3 BHK+" data-area="2,122.26 sq ft" data-link="../A-Typical/Typical.html" d="m160.13 2627.42-.11 591.34 117.41.32 15.52-18.34v-26.58l294.5-.22v12.05l6.73 16.71h47.31v-239.81l-8.9-3.69h-26.26v-50.46h149.2v-227.01h-74.44v-14.64l4.78-6.95v-3.91h-16.39l-8.03 12.27H292.54v-20.49l-14.56-21.16z" class="st0"/>
+                    <path id="Appartment_x5F_2" data-bhk="3 BHK+" data-area="2,122.26 sq ft" data-link="../A-Typical/Typical.html" d="m1350.93 2627.42.11 591.34-117.41.32-15.51-18.34v-26.58l-294.5-.22v12.05l-6.73 16.71h-47.31v-239.81l8.9-3.69h26.26v-50.46H755.53v-227.01h74.44v-14.64l-4.77-6.95v-3.91h16.38l8.03 12.27h368.91v-20.49l14.57-21.16z" class="st0"/>
+                    <path id="Appartment_x5F_3" data-bhk="3 BHK+" data-area="2,122.26sq ft" data-link="../A-Typical/Typical.html" d="m1351.15 2627.42-.11 591.34 115.79.32 15.3-18.34v-26.58l290.44-.22v12.05l6.63 16.71h46.66v-239.81l-8.78-3.69h-25.89v-50.46h147.14v-227.01h-73.41v-14.64l4.71-6.95v-3.91h-16.16l-7.92 12.27h-363.82v-20.49l-14.36-21.16z" class="st0"/>
+                    <path id="Appartment_x5F_4" data-bhk="3 BHK+" data-area="2,122.26 sq ft" data-link="../A-Typical/Typical.html" d="m2535.88 2627.42.11 591.34-117.41.32-15.52-18.34v-26.58l-294.5-.22v12.05l-6.72 16.71h-47.32v-239.81l8.9-3.69h26.26v-50.46h-149.2v-227.01h74.44v-14.64l-4.78-6.95v-3.91h16.39l8.03 12.27h368.91v-20.49l14.57-21.16z" class="st0"/>
+                    <path id="Appartment_x5F_5" data-bhk="3 BHK+" data-area="2,122.26 sq ft" data-link="../A-Typical/Typical.html" d="m2536.1 2627.42-.11 591.34 115.85.32 15.31-18.34v-26.58l290.59-.22v12.05l6.64 16.71h46.68v-239.81l-8.78-3.69h-25.91v-50.46h147.23v-227.01h-73.45v-14.64l4.71-6.95v-3.91h-16.17l-7.92 12.27h-364.02v-20.49l-14.37-21.16z" class="st0"/>
+                    <path id="Appartment_x5F_6" data-bhk="3 BHK+" data-area="2,122.26 sq ft" data-link="../A-Typical/Typical.html" d="m3720.73 2627.42.11 591.34-117.75.32-15.56-18.34v-26.58l-295.36-.22v12.05l-6.75 16.71h-47.45v-239.81l8.93-3.69h26.33v-50.46H3123.6v-227.01h74.65v-14.64l-4.79-6.95v-3.91h16.44l8.05 12.27h369.99v-20.49l14.61-21.16z" class="st0"/>
                 </svg>
             </div>
         </div>
     </div>
-
+    <script src="../../../../JS/BackButton.js"></script>
     <!-- <div id="videoOverlay" class="video-overlay">
         <video id="walkthroughVideo" controls preload="none">
             <source src="./../../Video/Lutyen Lobby.webm" type="video/webm">
@@ -680,6 +758,7 @@
     <script src="JS/ekdxgbwr0o.js"></script>
 
     
+   
 
     <script>
         window.addEventListener('DOMContentLoaded', () => {
@@ -707,69 +786,86 @@
 
     <script>
         // Mobile drag-to-pan (horizontal only)
+        // The .Cutout SVG overlay is position:absolute inside .content-wrapper on mobile
+        // so it pans together with the image automatically via wrapper transform.
         (function () {
             if (window.innerWidth > 600) return;
             const lobby = document.querySelector('.lobby-top');
             const wrapper = document.querySelector('.content-wrapper');
-            if (!lobby || !wrapper) return;
+            const img = wrapper ? wrapper.querySelector('img') : null;
+            if (!lobby || !wrapper || !img) return;
 
             let isDragging = false;
             let startX = 0;
             let translateX = 0;
+            let imgNaturalW = 0;
 
             function getImgWidth() {
-                const img = wrapper.querySelector('img');
-                return img ? img.offsetWidth : window.innerWidth;
+                // Use rendered offsetWidth; fallback to naturalWidth ratio
+                if (img.offsetWidth > 0) return img.offsetWidth;
+                if (img.naturalWidth && img.naturalHeight) {
+                    return Math.round(img.naturalWidth * (window.innerHeight / img.naturalHeight));
+                }
+                return window.innerWidth * 2;
             }
 
             function clamp(val, min, max) { return Math.min(Math.max(val, min), max); }
 
             function applyTransform() {
-                const minX = -(getImgWidth() - window.innerWidth);
-                translateX = clamp(translateX, minX, 0);
-                wrapper.style.transform = `translateX(${translateX}px)`;
+                const imgW = getImgWidth();
+                const minX = -(imgW - window.innerWidth);
+                translateX = clamp(translateX, Math.min(minX, 0), 0);
+                wrapper.style.transform = 'translateX(' + translateX + 'px)';
+            }
+
+            function initCenter() {
+                const imgW = getImgWidth();
+                translateX = -((imgW - window.innerWidth) / 2);
+                applyTransform();
             }
 
             // Touch
-            lobby.addEventListener('touchstart', e => {
+            lobby.addEventListener('touchstart', function(e) {
                 if (e.touches.length !== 1) return;
                 isDragging = true;
                 startX = e.touches[0].clientX - translateX;
                 lobby.classList.add('dragging');
             }, { passive: true });
 
-            lobby.addEventListener('touchmove', e => {
+            lobby.addEventListener('touchmove', function(e) {
                 if (!isDragging || e.touches.length !== 1) return;
                 translateX = e.touches[0].clientX - startX;
                 applyTransform();
             }, { passive: true });
 
-            lobby.addEventListener('touchend', () => {
+            lobby.addEventListener('touchend', function() {
                 isDragging = false;
                 lobby.classList.remove('dragging');
             });
 
-            // Mouse (desktop fallback)
-            lobby.addEventListener('mousedown', e => {
+            // Mouse (desktop fallback for dev)
+            lobby.addEventListener('mousedown', function(e) {
                 isDragging = true;
                 startX = e.clientX - translateX;
                 lobby.classList.add('dragging');
             });
-            window.addEventListener('mousemove', e => {
+            window.addEventListener('mousemove', function(e) {
                 if (!isDragging) return;
                 translateX = e.clientX - startX;
                 applyTransform();
             });
-            window.addEventListener('mouseup', () => {
+            window.addEventListener('mouseup', function() {
                 isDragging = false;
                 lobby.classList.remove('dragging');
             });
 
-            // Init: start centered
-            window.addEventListener('load', () => {
-                translateX = -((getImgWidth() - window.innerWidth) / 2);
-                applyTransform();
-            });
+            // Init after image loads (or immediately if cached)
+            if (img.complete && img.naturalWidth > 0) {
+                initCenter();
+            } else {
+                img.addEventListener('load', initCenter);
+            }
+            window.addEventListener('load', initCenter);
         })();
     </script>
 
@@ -814,148 +910,158 @@
 
 
 
-<div id="aptTooltip">
-  <div class="tt-bhk" id="ttBhk">3 BHK</div>
-  <div class="tt-area" id="ttArea">1800 sq ft</div>
-</div>
 
-<!-- MOBILE APT TAP PANEL -->
-<div id="mobileAptPanel">
-    <div id="mAptBhk"></div>
-    <div id="mAptArea"></div>
-</div>
+    <!-- APT HOVER TOOLTIP -->
+    <div id="aptTooltip">
+        <div class="tt-bhk" id="ttBhk">3 BHK</div>
+        <div class="tt-area" id="ttArea">1800 sq ft</div>
+    </div>
 
-<script>
-(function() {
-  const tooltip = document.getElementById('aptTooltip');
-  const ttBhk   = document.getElementById('ttBhk');
-  const ttArea  = document.getElementById('ttArea');
-
-  document.querySelectorAll('[data-bhk]').forEach(el => {
-    el.style.cursor = 'pointer';
-    el.addEventListener('mouseenter', e => {
-      ttBhk.textContent  = el.dataset.bhk;
-      ttArea.textContent = el.dataset.area;
-      tooltip.style.display = 'block';
-    });
-    el.addEventListener('mousemove', e => {
-      tooltip.style.left = (e.clientX + 14) + 'px';
-      tooltip.style.top  = (e.clientY + 14) + 'px';
-    });
-    el.addEventListener('mouseleave', () => {
-      tooltip.style.display = 'none';
-    });
-  });
-})();
-</script>
-
-<script>
-/* Mobile: tap apartment path -> show panel */
-(function() {
-    const panel = document.getElementById('mobileAptPanel');
-    const mBhk  = document.getElementById('mAptBhk');
-    const mArea = document.getElementById('mAptArea');
-    if (!panel) return;
-    let hideTimer = null;
-    function showPanel(bhk, area) {
-        mBhk.textContent  = bhk  || '—';
-        mArea.textContent = area || '—';
-        panel.style.opacity   = '1';
-        panel.style.transform = 'translateX(-50%) translateY(0)';
-        panel.style.pointerEvents = 'auto';
-        clearTimeout(hideTimer);
-        hideTimer = setTimeout(hidePanel, 3000);
-    }
-    function hidePanel() {
-        panel.style.opacity   = '0';
-        panel.style.transform = 'translateX(-50%) translateY(20px)';
-        panel.style.pointerEvents = 'none';
-    }
-    document.querySelectorAll('[data-bhk]').forEach(function(el) {
-        el.addEventListener('touchstart', function(e) {
-            e.stopPropagation();
-            showPanel(el.dataset.bhk, el.dataset.area);
-        }, { passive: true });
-    });
-    panel.addEventListener('click', hidePanel);
-})();
-</script>
-
-<!-- INFO BOX injected & managed by JS at end of body (mobile only) -->
-<script>
-(function() {
-    function isMobile() {
-        var touch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-        var smallScreen = Math.min(screen.width, screen.height) <= 820;
-        var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-        return (touch && (smallScreen || coarse)) || window.innerWidth <= 600;
-    }
-
-    function buildBox() {
-        var box = document.getElementById('infoBox');
-        if (!box) {
-            box = document.createElement('div');
-            box.id = 'infoBox';
-            box.innerHTML = '<strong>Penthouse</strong><br>Total Area: 2,122.26 sq ft';
-            document.body.appendChild(box);
-        }
-        if (document.body.lastElementChild !== box) document.body.appendChild(box);
-        applyStyle(box);
-        return box;
-    }
-
-    function applyStyle(box) {
-        var show = isMobile();
-        var css = {
-            'position': 'fixed',
-            'top': '38%',
-            'left': '50%',
-            'transform': 'translate(-50%, -50%)',
-            'margin': '0',
-            'width': 'max-content',
-            'max-width': '86vw',
-            'z-index': '2147483647',
-            'background': 'rgba(255,255,255,0.92)',
-            'backdrop-filter': 'blur(16px)',
-            '-webkit-backdrop-filter': 'blur(16px)',
-            'padding': '24px 48px',
-            'border-radius': '18px',
-            'font-family': 'sans-serif',
-            'border': '1px solid rgba(255,255,255,0.6)',
-            'box-shadow': '0 10px 40px rgba(0,0,0,0.3)',
-            'white-space': 'nowrap',
-            'pointer-events': 'none',
-            'text-align': 'center',
-            'font-size': '24px',
-            'color': '#111',
-            'font-weight': '500',
-            'line-height': '1.8',
-            'visibility': show ? 'visible' : 'hidden',
-            'opacity': show ? '1' : '0',
-            'display': show ? 'block' : 'none'
-        };
-        for (var k in css) box.style.setProperty(k, css[k], 'important');
-    }
-
-    function tick() { buildBox(); }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', tick);
-    } else { tick(); }
-    window.addEventListener('load', tick);
-    window.addEventListener('resize', tick);
-    var n = 0, iv = setInterval(function(){ tick(); if (++n > 20) clearInterval(iv); }, 250);
-})();
-</script>
+    <!-- MOBILE APT TAP PANEL -->
+    <div id="mobileAptPanel">
+        <div id="mAptBhk"></div>
+        <div id="mAptArea"></div>
+    </div>
 
     <script>
-        // Force fresh reload when user navigates back (fixes SVG re-selection)
-        window.addEventListener('pageshow', function(e) {
-            if (e.persisted) {
-                window.location.reload();
-            }
+    (function() {
+        const tooltip = document.getElementById('aptTooltip');
+        const ttBhk   = document.getElementById('ttBhk');
+        const ttArea  = document.getElementById('ttArea');
+        let mouseX = 0, mouseY = 0;
+        document.addEventListener('mousemove', function(e) {
+            mouseX = e.clientX; mouseY = e.clientY;
+            if (tooltip.classList.contains('visible')) positionTooltip();
         });
+        function positionTooltip() {
+            const tw = tooltip.offsetWidth, th = tooltip.offsetHeight;
+            let x = mouseX + 18, y = mouseY + 18;
+            if (x + tw > window.innerWidth - 10)  x = mouseX - tw - 14;
+            if (y + th > window.innerHeight - 10) y = mouseY - th - 14;
+            tooltip.style.left = x + 'px'; tooltip.style.top = y + 'px';
+        }
+        document.querySelectorAll('.Cutout path').forEach(function(path) {
+            const bhk  = path.getAttribute('data-bhk');
+            const area = path.getAttribute('data-area');
+            if (!bhk && !area) return;
+            path.addEventListener('mouseenter', function() {
+                ttBhk.textContent  = bhk  || '\u2014';
+                ttArea.textContent = area || '\u2014';
+                positionTooltip();
+                tooltip.classList.add('visible');
+            });
+            path.addEventListener('mouseleave', function() {
+                tooltip.classList.remove('visible');
+            });
+        });
+    })();
     </script>
-</body>
+
+    <script>
+    /* Mobile: tap apartment path -> show panel */
+    (function() {
+        const panel = document.getElementById('mobileAptPanel');
+        const mBhk  = document.getElementById('mAptBhk');
+        const mArea = document.getElementById('mAptArea');
+        if (!panel) return;
+        let hideTimer = null;
+        function showPanel(bhk, area) {
+            mBhk.textContent  = bhk  || '—';
+            mArea.textContent = area || '—';
+            panel.style.opacity   = '1';
+            panel.style.transform = 'translateX(-50%) translateY(0)';
+            panel.style.pointerEvents = 'auto';
+            clearTimeout(hideTimer);
+            hideTimer = setTimeout(hidePanel, 3000);
+        }
+        function hidePanel() {
+            panel.style.opacity   = '0';
+            panel.style.transform = 'translateX(-50%) translateY(20px)';
+            panel.style.pointerEvents = 'none';
+        }
+        document.querySelectorAll('.Cutout path').forEach(function(path) {
+            const bhk  = path.getAttribute('data-bhk');
+            const area = path.getAttribute('data-area');
+            if (!bhk && !area) return;
+            path.addEventListener('touchstart', function(e) {
+                e.stopPropagation();
+                showPanel(bhk, area);
+            }, { passive: true });
+        });
+        panel.addEventListener('click', hidePanel);
+    })();
+    </script>
+
+    <script>
+        // Info-box: bulletproof mobile-only badge. Re-injected on top layer
+        // and re-asserted repeatedly so no late-loading script can hide/cover it.
+        (function() {
+            // Page has no viewport meta, so innerWidth can be ~980 on phones.
+            // Detect a real phone via touch + screen width, with innerWidth fallback.
+            function isMobile() {
+                var touch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+                var smallScreen = Math.min(screen.width, screen.height) <= 820;
+                var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+                return (touch && (smallScreen || coarse)) || window.innerWidth <= 600;
+            }
+
+            function buildBox() {
+                var box = document.getElementById('infoBox');
+                if (!box) {
+                    box = document.createElement('div');
+                    box.id = 'infoBox';
+                    box.innerHTML = '<strong>Typical Floor:</strong> 1rd \u2013 17th<br><strong>Total Area:</strong> 2,122.26 sq ft';
+                    document.body.appendChild(box);
+                }
+                // Keep it as the very last child of body (top of DOM paint order)
+                if (document.body.lastElementChild !== box) document.body.appendChild(box);
+                applyStyle(box);
+                return box;
+            }
+
+            function applyStyle(box) {
+                var show = isMobile();
+                var css = {
+                    'position': 'fixed',
+                    'top': '38%',
+                    'left': '50%',
+                    'transform': 'translate(-50%, -50%)',
+                    'margin': '0',
+                    'width': 'max-content',
+                    'max-width': '86vw',
+                    'z-index': '2147483647',
+                    'background': 'rgba(255,255,255,0.92)',
+                    'backdrop-filter': 'blur(16px)',
+                    '-webkit-backdrop-filter': 'blur(16px)',
+                    'padding': '24px 48px',
+                    'border-radius': '18px',
+                    'font-family': 'sans-serif',
+                    'border': '1px solid rgba(255,255,255,0.6)',
+                    'box-shadow': '0 10px 40px rgba(0,0,0,0.3)',
+                    'white-space': 'nowrap',
+                    'pointer-events': 'none',
+                    'text-align': 'center',
+                    'font-size': '24px',
+                    'color': '#111',
+                    'font-weight': '500',
+                    'line-height': '1.8',
+                    'visibility': show ? 'visible' : 'hidden',
+                    'opacity': show ? '1' : '0',
+                    'display': show ? 'block' : 'none'
+                };
+                for (var k in css) box.style.setProperty(k, css[k], 'important');
+            }
+
+            function tick() { buildBox(); }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', tick);
+            } else { tick(); }
+            window.addEventListener('load', tick);
+            window.addEventListener('resize', tick);
+            // Re-assert for 5s to defeat any late script that removes/covers it
+            var n = 0, iv = setInterval(function(){ tick(); if (++n > 20) clearInterval(iv); }, 250);
+        })();
+    </script></body>
 
 </html>

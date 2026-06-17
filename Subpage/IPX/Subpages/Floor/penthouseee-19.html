@@ -8,13 +8,7 @@
         body {
             margin: 0;
             overflow: hidden;
-            max-height: 100vh;
-            max-width: 100vw;
             user-select: none;
-        }
-        html {
-            overflow: hidden;
-            height: 100%;
         }
 
         .content-wrapper {
@@ -71,14 +65,14 @@
 
 
         .Cutout path:hover {
-                fill: transparent !important;
+             fill: transparent !important;
         stroke: transparent !important;
         }
 
 
         .Cutout path.selected {
-            fill: transparent !important;
-            stroke: transparent !important;
+                   fill: transparent !important;
+        stroke: transparent !important;
         }
 
         .lobby-top {
@@ -176,7 +170,7 @@
         }
 
         /* FLOOR PILL BASE */
-        /* FLOOR PILL BASE */
+      /* FLOOR PILL BASE */
         .floor-pill {
             position: fixed;
             top: 20px;
@@ -349,177 +343,135 @@
             transform: scale(1);
             opacity: 1;
         }
-
         .floor-badge {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 9999;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 999px;
+    padding: 10px 28px;
+    font-family: sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    color: #000000;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+    border: 1px solid rgba(201,168,124,0.3);
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+
+        /* ── APT TOOLTIP ── */
+        #aptTooltip {
             position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 9999;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border-radius: 999px;
-            padding: 10px 28px;
-            font-family: sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            color: #000000;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
-            border: 1px solid rgba(201, 168, 124, 0.3);
-            white-space: nowrap;
+            z-index: 99999;
             pointer-events: none;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.18s ease, transform 0.18s ease;
+            background: #1a1a1a;
+            border: 1px solid rgba(201,168,124,0.35);
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-family: sans-serif;
+            color: #f0f0f0;
+            white-space: nowrap;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.55);
+        }
+        #aptTooltip.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #aptTooltip .tt-bhk {
+            font-size: 15px;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 3px;
+        }
+        #aptTooltip .tt-area {
+            font-size: 13px;
+            color: #aaaaaa;
         }
     
-#aptTooltip {
-  position: fixed;
-  background: #1a1a1a;
-  border: 1px solid rgba(201,168,124,0.35);
-  border-radius: 6px;
-  padding: 8px 12px;
-  pointer-events: none;
-  display: none;
-  z-index: 9999;
-  white-space: nowrap;
-}
-.tt-bhk {
-  color: #ffffff;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-}
-.tt-area {
-  color: #aaaaaa;
-  margin-top: 2px;
-}
-
-        /* ── MOBILE RESPONSIVE ── */
-        @media (max-width: 600px) {
-            html, body {
-                overflow: hidden !important;
-                height: 100% !important;
-                max-height: 100vh !important;
-            }
-            .lobby-top {
-                padding-bottom: 70px;
-            }
-            .close-btn2 {
-                top: 16px;
-                left: 16px;
-                width: 60px;
-                height: 60px;
-                border-radius: 16px;
-                font-size: 28px;
-            }
-            .touch-button {
-                --btn-scale: 0.75;
-                font-size: 14px;
-                padding: 10px 10px;
-            }
-            .floor-pill {
-                top: 16px;
-                right: 16px;
-            }
-            .floor-badge {
-                font-size: 12px;
-                padding: 8px 18px;
-                top: 16px;
-            }
-            #aptTooltip { display: none !important; }
-            #mobileAptPanel { display: block; }
-            .dock-wrap {
-                position: fixed !important;
-                bottom: 0 !important;
-                left: 0 !important;
-                right: 0 !important;
-                top: auto !important;
-                width: 100vw !important;
-                max-width: 100vw !important;
-                transform: none !important;
-                z-index: 9998 !important;
-            }
-            .dock-items {
-                display: flex !important;
-                flex-direction: row !important;
-                justify-content: space-around !important;
-                align-items: center !important;
-                width: 100% !important;
-                padding: 6px 4px 12px !important;
-                gap: 0 !important;
-                flex-wrap: nowrap !important;
-            }
-            .dock-item {
-                flex: 1 !important;
-                display: flex !important;
-                flex-direction: column !important;
-                align-items: center !important;
-                justify-content: center !important;
-                width: auto !important;
-                min-width: 0 !important;
-                max-width: none !important;
-            }
-            .dock-icon {
-                width: 44px !important;
-                height: 44px !important;
-                min-width: 44px !important;
-                min-height: 44px !important;
-                max-width: 44px !important;
-                max-height: 44px !important;
-                border-radius: 12px !important;
-            }
-            .dock-icon svg {
-                width: 22px !important;
-                height: 22px !important;
-                max-width: 22px !important;
-                max-height: 22px !important;
-            }
-            .dock-item-label {
-                display: block !important;
-                font-size: 10px !important;
-                color: rgba(255,255,255,0.7) !important;
-                text-align: center !important;
-                white-space: nowrap !important;
-                overflow: hidden !important;
-                text-overflow: ellipsis !important;
-                max-width: 64px !important;
-            }
-            .dock-label { display: none !important; }
-            .dock-divider { display: none !important; }
-            .dock-dot { display: none !important; }
+    /* ===== MOBILE RESPONSIVE ===== */
+    @media (max-width: 600px) {
+        #dock, .dock {
+            width: 100vw !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            transform: none !important;
+            border-radius: 0 !important;
+            padding: 4px 0 !important;
+            display: flex !important;
+            justify-content: space-around !important;
+            align-items: center !important;
         }
-
-        /* ── MOBILE APT TAP PANEL ── */
+        .dock-item {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+            flex: 1 !important;
+            gap: 2px !important;
+            padding: 4px 2px !important;
+            transform: none !important;
+            width: auto !important;
+            height: auto !important;
+        }
+        .dock-icon, .dock-item img, .dock-item svg {
+            width: 44px !important;
+            height: 44px !important;
+            min-width: 44px !important;
+            min-height: 44px !important;
+            max-width: 44px !important;
+            max-height: 44px !important;
+            transform: none !important;
+        }
+        .dock-item-label {
+            display: block !important;
+            font-size: 10px !important;
+            color: #fff !important;
+            text-align: center !important;
+            margin-top: 2px !important;
+        }
+        .dock-item::after, .dock-item::before {
+            display: none !important;
+        }
+        #lobby, .lobby {
+            padding-bottom: 70px !important;
+        }
+        .close-btn, .close-btn2, #closeBtn, #closeBtn2 {
+            width: 60px !important;
+            height: 60px !important;
+            font-size: 28px !important;
+            top: 16px !important;
+            left: 16px !important;
+            position: fixed !important;
+            z-index: 99999 !important;
+        }
         #mobileAptPanel {
             display: none;
             position: fixed;
-            bottom: 90px;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            z-index: 99999;
-            background: #1a1a1a;
-            border: 1px solid rgba(201,168,124,0.35);
-            border-radius: 16px;
-            padding: 14px 28px;
-            font-family: sans-serif;
-            color: #f0f0f0;
-            text-align: center;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.6);
-            opacity: 0;
-            transition: opacity 0.22s ease, transform 0.22s ease;
-            pointer-events: none;
-            min-width: 180px;
-        }
-        #mobileAptPanel #mAptBhk {
-            font-size: 16px;
-            font-weight: 700;
+            bottom: 70px;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.85);
             color: #fff;
-            margin-bottom: 4px;
+            padding: 16px;
+            z-index: 99998;
+            border-radius: 12px 12px 0 0;
+            font-size: 15px;
         }
-        #mobileAptPanel #mAptArea {
-            font-size: 13px;
-            color: #aaa;
+        .apt-tooltip, .tooltip, [class*="tooltip"] {
+            display: none !important;
         }
-
+    }
         /* ── INFO BOX ── (styled entirely via JS; mobile-only) */
         #infoBox strong {
             font-weight: 700 !important;
@@ -530,10 +482,10 @@
 </head>
 
 <body>
-    <!-- <div class="floor-badge">Floor 3</div> -->
+<!-- <div class="floor-badge">Floor 3</div> -->
 
+    
 
-    <script src="../../JS/BackButton.js"></script>
 
 
     <!-- Button (use JS click handler so message is built fresh on click)
@@ -553,26 +505,31 @@
     <div class="lobby-top">
         <div class="content-wrapper">
             <!-- <img src="./../../images/Apparments/1BHK/Lobby_Top.jpg" alt="Penthouse Lobby Image" /> -->
-            <img id="mainImage" src="images/Penthouse-19.jpg" data-full="images/Penthouse-19.jpg" alt="Home"
-                fetchpriority="high" decoding="async" width="4096" height="4096" class="blur-up" />
+            <img id="mainImage" src="images/penthouse-19.jpg"
+                data-full="images/penthouse-19.jpg" alt="Home" fetchpriority="high" decoding="async" width="4096"
+                height="4096" class="blur-up" />
             <div class="Cutout">
-
-                   <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" viewBox="0 0 3840 5758">
-                    <path id="Appartment_x5F_5" data-bhk="Penthouse" data-area="2,122.26 sq ft" data-link="../A-penthouse/Penthouse.html?room=lobby_1"
-                        d="M714.61 2667.74v234.25H564.8v56.92h36.04v235.12h-45.83l-6.17-14.18v-8.55h-296.1v25l-12.34 14.61H123.09v-588.25h115.29l14.82 17.48v27.54h367.34l8.66-16.26h12.77v15.91z" />
-                    <path id="Appartment_x5F_4" data-bhk="Penthouse" data-area="2,122.26 sq ft" data-link="../A-penthouse/Penthouse.html?room=lobby_1"
-                        d="M714.61 2667.74v234.25h149.81v56.92h-36.04v235.12h45.84l6.16-14.18v-8.55h296.1v25l12.34 14.61h117.32v-588.25h-115.29l-14.83 17.48v27.54H808.69l-8.66-16.26h-12.77v15.91z" />
-                    <path id="Appartment_x5F_3" data-bhk="Penthouse" data-area="2,122.26 sq ft" data-link="../A-penthouse/Penthouse.html?room=lobby_1"
-                        d="M1897.66 2667.74v234.25h-149.81v56.92h36.04v235.12h-45.83l-6.17-14.18v-8.55h-296.1v25l-12.34 14.61h-117.31v-588.25h115.28l14.83 17.48v27.54h367.34l8.65-16.26h12.78v15.91z" />
-                    <path id="Appartment_x5F_1" data-bhk="Penthouse" data-area="2,122.26 sq ft" data-link="../A-penthouse/Penthouse.html?room=lobby_1"
-                        d="M3075.04 2667.74v234.25h-149.81v56.92h36.04v235.12h-45.83l-6.17-14.18v-8.55h-296.1v25l-12.34 14.61h-117.31v-588.25h115.28l14.83 17.48v27.54h367.34l8.65-16.26h12.77v15.91z" />
-                    <path id="Appartment_x5F_2" data-bhk="Penthouse" data-area="2,122.26 sq ft" data-link="../A-penthouse/Penthouse.html?room=lobby_1"
-                        d="M1897.66 2667.74v234.25h148.37v56.92h-35.69v235.12h45.39l6.11-14.18v-8.55h293.27v25l12.22 14.61h116.19v-588.25h-114.19l-14.68 17.48v27.54h-363.82l-8.57-16.26h-12.65v15.91z" />
+            
+                <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" viewBox="0 0 3840 5758">
+                    <path id="Appartment_x5F_3" data-bhk="Penthouse" data-area="2595.24 sq ft" data-link="../Penthouse-Tower-B/360/Penthouse.html"
+                        d="M2410.88 3004.91v170.54h73.05v60.25h230.87v-43.67h126.79v-68.76h51.42v-133.32h-32.46v-50.99h-110.11v-18.48H2547.1v84.18z" />
+                    <path id="Appartment_x5F_2" data-bhk="Penthouse" data-area="2595.24 sq ft" data-link="../Penthouse-Tower-B/360/Penthouse.html"
+                        d="M2410.88 3004.91v170.54h-73.9v60.25h-233.55v-43.67h-128.27v-68.76h-52.02v-133.32h32.84v-50.99h111.4v-18.48h205.7v84.18z" />
+                    <path id="Appartment_x5F_7" data-bhk="Penthouse" data-area="2595.24 sq ft" data-link="../Penthouse-Tower-B/360/Penthouse.html"
+                        d="M2410.88 2738.46v-170.54h73.05v-60.25h230.87v43.67h126.79v68.75h51.42v133.33h-32.46v50.98h-110.11v18.48H2547.1v-84.17z" />
+                    <path id="Appartment_x5F_6" data-bhk="Penthouse" data-area="2595.24 sq ft" data-link="../Penthouse-Tower-B/360/Penthouse.html"
+                        d="M2410.88 2738.46v-170.54h-73.9v-60.25h-233.55v43.67h-128.27v68.75h-52.02v133.33h32.84v50.98h111.4v18.48h205.7v-84.17z" />
+                    <path id="Appartment_x5F_1" data-bhk="Penthouse" data-area="2595.24 sq ft" data-link="../Penthouse-Tower-B/360/Penthouse.html"
+                        d="M1443.91 3004.91v170.54h72.61v60.25H1746v-43.67h126.02v-68.76h51.12v-133.32h-32.26v-50.99h-109.46v-18.48H1579.3v84.18z" />
+                    <path id="Appartment_x5F_5" data-bhk="Penthouse" data-area="2595.24 sq ft" data-link="../Typical-Tower-B/360/Typical.html"
+                        d="M1443.91 2738.46v-170.54h72.61v-60.25H1746v43.67h126.02v68.75h51.12v133.33h-32.26v50.98h-109.46v18.48H1579.3v-84.17z" />
+                    <path id="Appartment_x5F_4" data-bhk="Penthouse" data-area="2595.24 sq ft" data-link="../Typical-Tower-B/360/Typical.html"
+                        d="M1443.91 2738.46v-170.54h-73.26v-60.25h-231.52v43.67h-127.14v68.75h-51.57v133.33h32.55v50.98h110.42v18.48h203.91v-84.17z" />
                 </svg>
             </div>
         </div>
     </div>
-
+    <script src="../../JS/BackButton.js"></script>
     <!-- <div id="videoOverlay" class="video-overlay">
         <video id="walkthroughVideo" controls preload="none">
             <source src="./../../Video/Lutyen Lobby.webm" type="video/webm">
@@ -633,27 +590,27 @@
         });
     </script>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const widget = document.getElementById("ciWidget");
-            const toggle = document.getElementById("ciToggle");
-            const ciClose = document.getElementById("ciClose");
+      <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const widget = document.getElementById("ciWidget");
+      const toggle = document.getElementById("ciToggle");
+      const ciClose = document.getElementById("ciClose");
 
-            if (ciClose) {
-                ciClose.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    widget.classList.add("collapsed");
-                    toggle.classList.add("visible");
-                });
-            }
-            if (toggle) {
-                toggle.addEventListener("click", () => {
-                    widget.classList.remove("collapsed");
-                    toggle.classList.remove("visible");
-                });
-            }
+      if (ciClose) {
+        ciClose.addEventListener("click", (e) => {
+          e.stopPropagation();
+          widget.classList.add("collapsed");
+          toggle.classList.add("visible");
+        });
+      }
+      if (toggle) {
+        toggle.addEventListener("click", () => {
+          widget.classList.remove("collapsed");
+          toggle.classList.remove("visible");
+        });
+      }
 
-            const closeCard = document.getElementById("closeCard");
+       const closeCard = document.getElementById("closeCard");
             if (closeCard) {
                 closeCard.addEventListener("click", () => {
                     document.getElementById("closeCard").addEventListener("click", () => {
@@ -662,12 +619,12 @@
                 });
             }
 
-            // Block pointer events from reaching Panolens canvas
-            ['mousedown', 'mouseup', 'click', 'pointerdown', 'pointerup', 'touchstart', 'touchend'].forEach(evt => {
-                widget.addEventListener(evt, e => e.stopPropagation());
-            });
-        });
-    </script>
+      // Block pointer events from reaching Panolens canvas
+      ['mousedown', 'mouseup', 'click', 'pointerdown', 'pointerup', 'touchstart', 'touchend'].forEach(evt => {
+        widget.addEventListener(evt, e => e.stopPropagation());
+      });
+    });
+  </script>
 
 
     <script src="JS/dec7d4pmru.js"></script>
@@ -679,30 +636,32 @@
     <script src="JS/s2dlrxbqxj.js"></script>
     <script src="JS/ekdxgbwr0o.js"></script>
 
-    
+  
+   
+    </script>
 
     <script>
-        window.addEventListener('DOMContentLoaded', () => {
-            const detailsBox = document.getElementById('details');
-            if (detailsBox) detailsBox.innerHTML = ``;
-            const paths = document.querySelectorAll('.Cutout path');
+     window.addEventListener('DOMContentLoaded', () => {
+    const detailsBox = document.getElementById('details');
+    if (detailsBox) detailsBox.innerHTML = ``;
+    const paths = document.querySelectorAll('.Cutout path');
 
-            const currentFile = window.location.pathname.split('/').pop();
-            const floorMatch = currentFile.match(/Floor_(\d+)/);
-            const currentFloor = floorMatch ? floorMatch[1] : '1';
+    const currentFile = window.location.pathname.split('/').pop();
+    const floorMatch = currentFile.match(/Floor_(\d+)/);
+    const currentFloor = floorMatch ? floorMatch[1] : '1';
 
-            paths.forEach(path => {
-                const link = path.getAttribute('data-link');
-                if (link) {
-                    path.addEventListener('click', () => {
-                        path.style.opacity = "0.6";
-                        setTimeout(() => {
-                            window.location.href = `${link}?floor=${currentFloor}`;
-                        }, 800);
-                    });
-                }
+    paths.forEach(path => {
+        const link = path.getAttribute('data-link');
+        if (link) {
+            path.addEventListener('click', () => {
+                path.style.opacity = "0.6";
+                setTimeout(() => {
+                    window.location.href = `${link}?floor=${currentFloor}`;
+                }, 800);
             });
-        });
+        }
+    });
+});
     </script>
 
     <script>
@@ -814,148 +773,108 @@
 
 
 
-<div id="aptTooltip">
-  <div class="tt-bhk" id="ttBhk">3 BHK</div>
-  <div class="tt-area" id="ttArea">1800 sq ft</div>
-</div>
 
-<!-- MOBILE APT TAP PANEL -->
-<div id="mobileAptPanel">
-    <div id="mAptBhk"></div>
-    <div id="mAptArea"></div>
-</div>
+    <!-- APT HOVER TOOLTIP -->
+    <div id="aptTooltip">
+        <div class="tt-bhk" id="ttBhk">3 BHK</div>
+        <div class="tt-area" id="ttArea">1800 sq ft</div>
+    </div>
 
-<script>
-(function() {
-  const tooltip = document.getElementById('aptTooltip');
-  const ttBhk   = document.getElementById('ttBhk');
-  const ttArea  = document.getElementById('ttArea');
+    <script>
+    (function() {
+        const tooltip = document.getElementById('aptTooltip');
+        const ttBhk   = document.getElementById('ttBhk');
+        const ttArea  = document.getElementById('ttArea');
 
-  document.querySelectorAll('[data-bhk]').forEach(el => {
-    el.style.cursor = 'pointer';
-    el.addEventListener('mouseenter', e => {
-      ttBhk.textContent  = el.dataset.bhk;
-      ttArea.textContent = el.dataset.area;
-      tooltip.style.display = 'block';
-    });
-    el.addEventListener('mousemove', e => {
-      tooltip.style.left = (e.clientX + 14) + 'px';
-      tooltip.style.top  = (e.clientY + 14) + 'px';
-    });
-    el.addEventListener('mouseleave', () => {
-      tooltip.style.display = 'none';
-    });
-  });
-})();
-</script>
+        let mouseX = 0, mouseY = 0;
 
-<script>
-/* Mobile: tap apartment path -> show panel */
-(function() {
-    const panel = document.getElementById('mobileAptPanel');
-    const mBhk  = document.getElementById('mAptBhk');
-    const mArea = document.getElementById('mAptArea');
-    if (!panel) return;
-    let hideTimer = null;
-    function showPanel(bhk, area) {
-        mBhk.textContent  = bhk  || '—';
-        mArea.textContent = area || '—';
-        panel.style.opacity   = '1';
-        panel.style.transform = 'translateX(-50%) translateY(0)';
-        panel.style.pointerEvents = 'auto';
-        clearTimeout(hideTimer);
-        hideTimer = setTimeout(hidePanel, 3000);
-    }
-    function hidePanel() {
-        panel.style.opacity   = '0';
-        panel.style.transform = 'translateX(-50%) translateY(20px)';
-        panel.style.pointerEvents = 'none';
-    }
-    document.querySelectorAll('[data-bhk]').forEach(function(el) {
-        el.addEventListener('touchstart', function(e) {
-            e.stopPropagation();
-            showPanel(el.dataset.bhk, el.dataset.area);
-        }, { passive: true });
-    });
-    panel.addEventListener('click', hidePanel);
-})();
-</script>
+        document.addEventListener('mousemove', function(e) {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+            if (tooltip.classList.contains('visible')) {
+                positionTooltip();
+            }
+        });
+
+        function positionTooltip() {
+            const tw = tooltip.offsetWidth;
+            const th = tooltip.offsetHeight;
+            let x = mouseX + 18;
+            let y = mouseY + 18;
+            if (x + tw > window.innerWidth - 10)  x = mouseX - tw - 14;
+            if (y + th > window.innerHeight - 10) y = mouseY - th - 14;
+            tooltip.style.left = x + 'px';
+            tooltip.style.top  = y + 'px';
+        }
+
+        document.querySelectorAll('.Cutout path').forEach(function(path) {
+            const bhk  = path.getAttribute('data-bhk');
+            const area = path.getAttribute('data-area');
+            if (!bhk && !area) return;
+
+            path.addEventListener('mouseenter', function() {
+                ttBhk.textContent  = bhk  || '—';
+                ttArea.textContent = area || '—';
+                positionTooltip();
+                tooltip.classList.add('visible');
+            });
+
+            path.addEventListener('mouseleave', function() {
+                tooltip.classList.remove('visible');
+            });
+        });
+    })();
+    </script>
 
 <!-- INFO BOX injected & managed by JS at end of body (mobile only) -->
 <script>
 (function() {
-    function isMobile() {
-        var touch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
-        var smallScreen = Math.min(screen.width, screen.height) <= 820;
-        var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
-        return (touch && (smallScreen || coarse)) || window.innerWidth <= 600;
-    }
-
-    function buildBox() {
-        var box = document.getElementById('infoBox');
-        if (!box) {
-            box = document.createElement('div');
-            box.id = 'infoBox';
-            box.innerHTML = '<strong>Penthouse</strong><br>Total Area: 2,122.26 sq ft';
-            document.body.appendChild(box);
-        }
-        if (document.body.lastElementChild !== box) document.body.appendChild(box);
-        applyStyle(box);
-        return box;
-    }
-
-    function applyStyle(box) {
-        var show = isMobile();
-        var css = {
-            'position': 'fixed',
-            'top': '38%',
-            'left': '50%',
-            'transform': 'translate(-50%, -50%)',
-            'margin': '0',
-            'width': 'max-content',
-            'max-width': '86vw',
-            'z-index': '2147483647',
-            'background': 'rgba(255,255,255,0.92)',
-            'backdrop-filter': 'blur(16px)',
-            '-webkit-backdrop-filter': 'blur(16px)',
-            'padding': '24px 48px',
-            'border-radius': '18px',
-            'font-family': 'sans-serif',
-            'border': '1px solid rgba(255,255,255,0.6)',
-            'box-shadow': '0 10px 40px rgba(0,0,0,0.3)',
-            'white-space': 'nowrap',
-            'pointer-events': 'none',
-            'text-align': 'center',
-            'font-size': '24px',
-            'color': '#111',
-            'font-weight': '500',
-            'line-height': '1.8',
-            'visibility': show ? 'visible' : 'hidden',
-            'opacity': show ? '1' : '0',
-            'display': show ? 'block' : 'none'
-        };
-        for (var k in css) box.style.setProperty(k, css[k], 'important');
-    }
-
-    function tick() { buildBox(); }
-
-    if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', tick);
-    } else { tick(); }
-    window.addEventListener('load', tick);
-    window.addEventListener('resize', tick);
-    var n = 0, iv = setInterval(function(){ tick(); if (++n > 20) clearInterval(iv); }, 250);
+  function isMobile() {
+      var touch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+      var smallScreen = Math.min(screen.width, screen.height) <= 820;
+      var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+      return (touch && (smallScreen || coarse)) || window.innerWidth <= 600;
+  }
+  function buildBox() {
+      var box = document.getElementById('infoBox');
+      if (!box) {
+          box = document.createElement('div');
+          box.id = 'infoBox';
+          box.innerHTML = '<strong>Penthouse</strong><br>Total Area: 2,595.24 sq ft';
+          document.body.appendChild(box);
+      }
+      if (document.body.lastElementChild !== box) document.body.appendChild(box);
+      applyStyle(box);
+      return box;
+  }
+  function applyStyle(box) {
+      var show = isMobile();
+      var css = {
+          'position':'fixed','top':'38%','left':'50%',
+          'transform':'translate(-50%, -50%)','margin':'0',
+          'width':'max-content','max-width':'86vw','z-index':'2147483647',
+          'background':'rgba(255,255,255,0.92)','backdrop-filter':'blur(16px)',
+          '-webkit-backdrop-filter':'blur(16px)','padding':'24px 48px',
+          'border-radius':'18px','font-family':'sans-serif',
+          'border':'1px solid rgba(255,255,255,0.6)',
+          'box-shadow':'0 10px 40px rgba(0,0,0,0.3)','white-space':'nowrap',
+          'pointer-events':'none','text-align':'center','font-size':'24px',
+          'color':'#111','font-weight':'500','line-height':'1.8',
+          'visibility': show ? 'visible' : 'hidden',
+          'opacity': show ? '1' : '0',
+          'display': show ? 'block' : 'none'
+      };
+      for (var k in css) box.style.setProperty(k, css[k], 'important');
+  }
+  function tick() { buildBox(); }
+  if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', tick);
+  } else { tick(); }
+  window.addEventListener('load', tick);
+  window.addEventListener('resize', tick);
+  var n = 0, iv = setInterval(function(){ tick(); if (++n > 20) clearInterval(iv); }, 250);
 })();
 </script>
-
-    <script>
-        // Force fresh reload when user navigates back (fixes SVG re-selection)
-        window.addEventListener('pageshow', function(e) {
-            if (e.persisted) {
-                window.location.reload();
-            }
-        });
-    </script>
 </body>
 
 </html>

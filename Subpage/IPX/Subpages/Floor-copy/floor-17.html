@@ -77,8 +77,8 @@
 
 
         .Cutout path.selected {
-                    fill: transparent !important;
-        stroke: transparent !important;
+            fill: transparent !important;
+            stroke: transparent !important;
         }
 
         .lobby-top {
@@ -1062,6 +1062,15 @@
             // Re-assert for 5s to defeat any late script that removes/covers it
             var n = 0, iv = setInterval(function(){ tick(); if (++n > 20) clearInterval(iv); }, 250);
         })();
-    </script></body>
+    </script>
+    <script>
+        // Force fresh reload when user navigates back (fixes SVG re-selection)
+        window.addEventListener('pageshow', function(e) {
+            if (e.persisted) {
+                window.location.reload();
+            }
+        });
+    </script>
+</body>
 
 </html>
