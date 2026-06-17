@@ -84,6 +84,7 @@
         }
 
         body.splash-active { overflow: hidden; touch-action: none; }
+        body.splash-active #music-toggle { touch-action: manipulation !important; pointer-events: auto !important; }
 
         body { background: var(--bg-0); color: var(--ink); }
 
@@ -1741,6 +1742,11 @@
                 font-size: 11px !important;
                 min-height: 46px !important;
                 gap: 8px !important;
+                pointer-events: auto !important;
+                touch-action: manipulation !important;
+                -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+                cursor: pointer !important;
+                z-index: 11500 !important;
             }
             #music-toggle span { display: inline !important; }
 
@@ -1810,6 +1816,11 @@
                 right: auto !important;
                 padding: 11px 16px !important;
                 min-height: 44px !important;
+                pointer-events: auto !important;
+                touch-action: manipulation !important;
+                -webkit-tap-highlight-color: rgba(0,0,0,0) !important;
+                cursor: pointer !important;
+                z-index: 11500 !important;
             }
             #music-toggle span { display: inline !important; font-size: 10.5px !important; }
 
@@ -1951,10 +1962,23 @@
 
             screen.addEventListener('animationend', function() {
                 screen.style.display = 'none';
+                // Ensure touch-action is clear on body after explore dismissal
+                document.body.style.touchAction = '';
+                document.body.classList.remove('splash-active');
                 runSplash();
                 // Show mute button
                 var btn = document.getElementById('music-toggle');
-                if (btn) btn.style.display = 'flex';
+                if (btn) {
+                    btn.style.display = 'flex';
+                    btn.style.pointerEvents = 'auto';
+                    btn.style.touchAction = 'manipulation';
+                    // touchend fallback for mobile
+                    btn.addEventListener('touchend', function(e) {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleMusic();
+                    }, { passive: false });
+                }
             }, { once: true });
         }
 
@@ -1998,9 +2022,7 @@
     <!-- Splash -->
     <div id="splash" class="splash" aria-live="polite" role="status">
         <div class="splash__backdrop"></div>
-        <div class="splash__content" role="img" aria-label="Powered by BetterSide">
-            <div class="splash__text">Powered by <strong>BetterSide.in</strong></div>
-        </div>
+
     </div>
 
     <!-- UI Hint -->
@@ -2384,20 +2406,11 @@
     </script>
 
     <script>
-        // Splash screen — triggered AFTER explore dismiss
+        // Splash screen — disabled (no branding to show)
         function runSplash() {
             const splash = document.getElementById("splash");
-            if (!splash) return;
-            document.body.classList.add("splash-active");
-            const SHOW_MS = 2000;
-            const FADE_MS = 600;
-            setTimeout(() => {
-                splash.classList.add("is-hidden");
-                setTimeout(() => {
-                    splash.remove();
-                    document.body.classList.remove("splash-active");
-                }, FADE_MS);
-            }, SHOW_MS);
+            if (splash) splash.remove();
+            document.body.classList.remove("splash-active");
         }
     </script>
 

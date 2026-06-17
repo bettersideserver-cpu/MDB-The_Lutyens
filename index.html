@@ -301,9 +301,51 @@
       letter-spacing: 1px;
     }
   </style>
+
+  <!-- Splash CSS -->
+  <style>
+    body.splash-active { overflow: hidden; touch-action: none; }
+    .splash {
+      position: fixed; inset: 0; z-index: 40000; display: grid; place-items: center;
+      pointer-events: auto; opacity: 1; transition: opacity .7s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .splash__backdrop {
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(245,242,235,0.92), rgba(237,232,221,0.98));
+      backdrop-filter: blur(20px) saturate(1.2);
+    }
+    .splash__content {
+      position: relative; display: flex; flex-direction: column; align-items: center;
+      gap: 16px; transform: translateY(8px);
+      animation: splash-pop .6s cubic-bezier(0.22, 0.68, 0, 1.04) forwards;
+      pointer-events: none;
+    }
+    .splash__text {
+      font: 500 16px/1.2 'Segoe UI', Arial, sans-serif;
+      color: rgba(60,50,30,0.85);
+      letter-spacing: 1.5px; text-transform: uppercase;
+    }
+    .splash__text strong {
+      color: #a87828;
+      font-weight: 700;
+    }
+    @keyframes splash-pop {
+      from { opacity: 0; transform: translateY(20px) scale(.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .splash.is-hidden { opacity: 0; pointer-events: none; }
+  </style>
 </head>
 
 <body>
+
+  <!-- Splash — Powered by BetterSide -->
+  <div id="splash" class="splash" aria-live="polite" role="status">
+    <div class="splash__backdrop"></div>
+    <div class="splash__content" role="img" aria-label="Powered by BetterSide">
+      <div class="splash__text">Powered by <strong>BetterSide.in</strong></div>
+    </div>
+  </div>
 
   <!-- Loading screen -->
   <div id="loading">
@@ -316,6 +358,15 @@
 
   <!-- Hamburger -->
   <div id="menu-btn"><span></span><span></span><span></span></div>
+
+  <!-- Powered by BetterSide -->
+  <div id="branding">
+    <div id="branding-text">
+      <div class="b1">Powered by</div>
+      <div class="b2">BetterSide.in</div>
+    </div>
+    <div id="branding-logo">BS</div>
+  </div>
 
   <!-- Flag pins injected by JS -->
   <div id="flags-container"></div>
@@ -714,6 +765,22 @@
     renderer.render(scene, camera);
   }
   renderLoop();
+</script>
+
+<script>
+  // Splash — auto-show on load, disappear after 2s
+  document.addEventListener('DOMContentLoaded', function() {
+    var splash = document.getElementById('splash');
+    if (!splash) return;
+    document.body.classList.add('splash-active');
+    setTimeout(function() {
+      splash.classList.add('is-hidden');
+      setTimeout(function() {
+        splash.remove();
+        document.body.classList.remove('splash-active');
+      }, 700);
+    }, 2000);
+  });
 </script>
 </body>
 
