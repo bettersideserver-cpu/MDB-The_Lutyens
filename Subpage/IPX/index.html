@@ -1972,15 +1972,18 @@
                     btn.style.display = 'flex';
                     btn.style.pointerEvents = 'auto';
                     btn.style.touchAction = 'manipulation';
-                    // Mobile: touchend handles toggle and blocks ghost click
+                    // Touch: handle toggle and block the ghost click (works on all mobile browsers incl. Safari/iPhone)
+                    var _touched = false;
                     btn.addEventListener('touchend', function(e) {
                         e.preventDefault();
                         e.stopPropagation();
+                        _touched = true;
                         toggleMusic();
+                        setTimeout(function(){ _touched = false; }, 600);
                     }, { passive: false });
-                    // Desktop: click handles toggle (touchend doesn't fire on desktop)
+                    // Desktop click (skipped if triggered by touch)
                     btn.addEventListener('click', function(e) {
-                        if (e.sourceCapabilities && e.sourceCapabilities.firesTouchEvents) return;
+                        if (_touched) return;
                         toggleMusic();
                     });
                 }
