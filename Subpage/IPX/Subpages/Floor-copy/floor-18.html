@@ -530,6 +530,13 @@
             font-size: 13px;
             color: #aaa;
         }
+
+        /* ── INFO BOX ── (styled entirely via JS; mobile-only) */
+        #infoBox strong {
+            font-weight: 700 !important;
+            color: #111 !important;
+            font-size: 18px !important;
+        }
     </style>
 </head>
 
@@ -897,6 +904,82 @@
         });
         panel.addEventListener('click', hidePanel);
     })();
+    </script>
+
+    <!-- INFO BOX injected & managed by JS at end of body (mobile only) -->
+    <script>
+        // Info-box: bulletproof mobile-only badge. Re-injected on top layer
+        // and re-asserted repeatedly so no late-loading script can hide/cover it.
+        (function() {
+            // Page has no viewport meta, so innerWidth can be ~980 on phones.
+            // Detect a real phone via touch + screen width, with innerWidth fallback.
+            function isMobile() {
+                var touch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+                var smallScreen = Math.min(screen.width, screen.height) <= 820;
+                var coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+                return (touch && (smallScreen || coarse)) || window.innerWidth <= 600;
+            }
+
+            function buildBox() {
+                var box = document.getElementById('infoBox');
+                if (!box) {
+                    box = document.createElement('div');
+                    box.id = 'infoBox';
+                    box.innerHTML =
+                        '<strong>Typical Floor:</strong> 3rd \u2013 17th &nbsp;|&nbsp; 2,122.26 sq ft' +
+                        '<br>' +
+                        '<strong>Skyvilla:</strong> 18th Floor &nbsp;|&nbsp; 4,215.18 sq ft';
+                    document.body.appendChild(box);
+                }
+                // Keep it as the very last child of body (top of DOM paint order)
+                if (document.body.lastElementChild !== box) document.body.appendChild(box);
+                applyStyle(box);
+                return box;
+            }
+
+            function applyStyle(box) {
+                var show = isMobile();
+                var css = {
+                    'position': 'fixed',
+                    'top': '38%',
+                    'left': '50%',
+                    'transform': 'translate(-50%, -50%)',
+                    'margin': '0',
+                    'width': 'max-content',
+                    'max-width': '86vw',
+                    'z-index': '2147483647',
+                    'background': 'rgba(255,255,255,0.92)',
+                    'backdrop-filter': 'blur(16px)',
+                    '-webkit-backdrop-filter': 'blur(16px)',
+                    'padding': '18px 36px',
+                    'border-radius': '18px',
+                    'font-family': 'sans-serif',
+                    'border': '1px solid rgba(255,255,255,0.6)',
+                    'box-shadow': '0 10px 40px rgba(0,0,0,0.3)',
+                    'white-space': 'nowrap',
+                    'pointer-events': 'none',
+                    'text-align': 'center',
+                    'font-size': '17px',
+                    'color': '#111',
+                    'font-weight': '500',
+                    'line-height': '1.8',
+                    'visibility': show ? 'visible' : 'hidden',
+                    'opacity': show ? '1' : '0',
+                    'display': show ? 'block' : 'none'
+                };
+                for (var k in css) box.style.setProperty(k, css[k], 'important');
+            }
+
+            function tick() { buildBox(); }
+
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', tick);
+            } else { tick(); }
+            window.addEventListener('load', tick);
+            window.addEventListener('resize', tick);
+            // Re-assert for 5s to defeat any late script that removes/covers it
+            var n = 0, iv = setInterval(function(){ tick(); if (++n > 20) clearInterval(iv); }, 250);
+        })();
     </script>
 </body>
 
