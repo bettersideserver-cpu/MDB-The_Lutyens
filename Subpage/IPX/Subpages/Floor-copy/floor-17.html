@@ -597,6 +597,38 @@
                 display: none !important;
             }
         }
+
+        /* ── INFO BOX ── */
+        #infoBox {
+            position: fixed !important;
+            top: 20px !important;
+            left: 50% !important;
+            z-index: 2147483647 !important;
+            background: rgba(255, 255, 255, 0.92) !important;
+            backdrop-filter: blur(14px) !important;
+            -webkit-backdrop-filter: blur(14px) !important;
+            padding: 12px 24px !important;
+            border-radius: 12px !important;
+            font-family: sans-serif !important;
+            border: 1px solid rgba(255, 255, 255, 0.6) !important;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25) !important;
+            transform: translateX(-50%) !important;
+            white-space: nowrap !important;
+            pointer-events: auto !important;
+            text-align: center !important;
+            font-size: 13px !important;
+            color: #111 !important;
+            font-weight: 500 !important;
+            line-height: 1.5 !important;
+            display: block !important;
+            visibility: visible !important;
+            opacity: 1 !important;
+        }
+        #infoBox strong {
+            font-weight: 700 !important;
+            color: #111 !important;
+        }
+
     </style>
 </head>
 
@@ -620,8 +652,13 @@
         </svg>
     </button>
     <div id="waLabel" class="wa-label">Chat on WhatsApp</div> -->
+    <!-- INFO BOX (mobile only) - positioned fixed outside stacking context -->
+    <div id="infoBox">
+        <strong>Typical Floor:</strong> 3rd – 17th<br><strong>Total Area:</strong> 2,122.26 sq ft
+    </div>
+    
     <button class="close-btn2" id="closeCard" style="width:60px!important;height:60px!important;font-size:28px!important;top:16px!important;left:16px!important;position:fixed!important;z-index:99999!important;background-color:#2c2c2c!important;color:white!important;border:none!important;border-radius:16px!important;display:flex!important;align-items:center!important;justify-content:center!important;cursor:pointer!important;">←</button>
-    <div class="lobby-top">
+        <div class="lobby-top">
         <div class="content-wrapper">
             <!-- <img src="./../../images/Apparments/1BHK/Lobby_Top.jpg" alt="Penthouse Lobby Image" /> -->
             <img id="mainImage" src="images/1-17.jpg" data-full="images/1-17.jpg" alt="Home" fetchpriority="high"
@@ -981,6 +1018,52 @@
         panel.addEventListener('click', hidePanel);
     })();
     </script>
-</body>
+
+    <script>
+        // Info-box: force-create & inject into body so nothing can hide it
+        (function() {
+            function ensureBox() {
+                // remove any existing static one to avoid duplicates
+                var existing = document.getElementById('infoBox');
+                if (existing) existing.remove();
+
+                var box = document.createElement('div');
+                box.id = 'infoBox';
+                box.innerHTML = '<strong>Typical Floor:</strong> 3rd \u2013 17th<br><strong>Total Area:</strong> 2,122.26 sq ft';
+                box.style.cssText = [
+                    'position:fixed','top:20px','left:0','right:0','margin:0 auto',
+                    'width:max-content','max-width:90vw',
+                    'z-index:2147483647',
+                    'background:rgba(255,255,255,0.92)',
+                    'backdrop-filter:blur(14px)','-webkit-backdrop-filter:blur(14px)',
+                    'padding:12px 24px','border-radius:12px','font-family:sans-serif',
+                    'border:1px solid rgba(255,255,255,0.6)',
+                    'box-shadow:0 8px 32px rgba(0,0,0,0.25)',
+                    'white-space:nowrap','pointer-events:auto','text-align:center',
+                    'font-size:13px','color:#111','font-weight:500','line-height:1.5',
+                    'display:block','visibility:visible','opacity:1'
+                ].join(' !important;') + ' !important;';
+
+                document.body.appendChild(box);
+
+                var isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+                function vis() {
+                    if (window.innerWidth <= 900 || isTouch) {
+                        box.style.setProperty('display','block','important');
+                    } else {
+                        box.style.setProperty('display','none','important');
+                    }
+                }
+                vis();
+                window.addEventListener('resize', vis);
+            }
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', ensureBox);
+            } else {
+                ensureBox();
+            }
+            window.addEventListener('load', ensureBox);
+        })();
+    </script></body>
 
 </html>
